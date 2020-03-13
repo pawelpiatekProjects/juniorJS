@@ -15,10 +15,10 @@ const CompanyPreviewCity = styled.p`
 text-align: center;
 `;
 
-const CompanyPreview = ({name, city,id}) => (
-    <CompanyPreviewWrapper>
+const CompanyPreview = ({name, city,id, click}) => (
+    <CompanyPreviewWrapper onClick={()=>click(id)}>
         <Row>
-            <CompanyPreviewName>{id}</CompanyPreviewName>
+            <CompanyPreviewName >{id}</CompanyPreviewName>
         </Row>
         <Row>
             <CompanyPreviewName>{name}</CompanyPreviewName>

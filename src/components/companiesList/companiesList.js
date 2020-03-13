@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import {Redirect, withRouter} from 'react-router-dom';
 import CompanyPreview from './companyPreview/companyPreview';
 import PaginationButtons from '../paginationButtons/paginationButtons'
 
@@ -30,7 +31,7 @@ const CompaniesFilterInput = styled.input`
 //todo: loading screen
 //todo: change to sorting by incomes
 //todo: add buttons to pagination
-const CompaniesList = () => {
+const CompaniesList = (props) => {
     const [searchInputValue, setSearchInputValue] = useState('');
     const [companiesList, setCompaniesList] = useState([]);
     const [currentCompaniesPage, setCurrentCompaniesPage] = useState(1);
@@ -65,6 +66,14 @@ const CompaniesList = () => {
         }
     };
 
+    const getCompanyData =(id) =>{
+        // console.log(id);
+                props.history.push({
+                    pathname: `/company/${id}`,
+                    state: {id: id}
+                })
+    }
+
     return (
         <CompaniesListWrapper>
             <CompaniesFilterInput onChange={SearchInputMethod}/>
@@ -77,7 +86,12 @@ const CompaniesList = () => {
                 {currentPage
                     .filter(company => company.name.toLowerCase().includes(searchInputValue.toLowerCase()))
                     .map(company => (
-                    <CompanyPreview key={company.id} name={company.name} city={company.city} id={company.id}/>
+                    <CompanyPreview
+                        click={getCompanyData}
+                        key={company.id}
+                        name={company.name}
+                        city={company.city}
+                        id={company.id}/>
                 ))}
             </CompaniesListTable>
             <PaginationButtons
