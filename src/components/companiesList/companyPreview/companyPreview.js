@@ -18,10 +18,10 @@ text-align: center;
 const CompanyPreview = ({name, city,id}) => (
     <CompanyPreviewWrapper>
         <Row>
-            <CompanyPreviewName>{name}</CompanyPreviewName>
+            <CompanyPreviewName>{id}</CompanyPreviewName>
         </Row>
         <Row>
-            <CompanyPreviewName>{id}</CompanyPreviewName>
+            <CompanyPreviewName>{name}</CompanyPreviewName>
         </Row>
         <Row>
             <CompanyPreviewCity>{city}</CompanyPreviewCity>
