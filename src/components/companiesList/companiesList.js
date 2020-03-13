@@ -8,6 +8,17 @@ const CompaniesListWrapper = styled.div`
 `;
 
 const CompaniesListTable = styled.table`
+width: 50%;
+margin: 1rem auto;
+border: 1px solid #333;
+`;
+
+const CompaniesListFirstRow = styled.tr`
+border-bottom: 1px solid #333;
+`;
+
+const CompaniesListFirstRowItem = styled.th`
+padding: 1rem;
 
 `;
 
@@ -25,8 +36,14 @@ const CompaniesList = () => {
     return (
         <CompaniesListWrapper>
             <CompaniesListTable>
-                {companiesList.map(company => (
-                    <CompanyPreview key={company.id} name={company.name} city={company.city}/>
+                <CompaniesListFirstRow>
+                    <CompaniesListFirstRowItem>Name</CompaniesListFirstRowItem>
+                    <CompaniesListFirstRowItem>City</CompaniesListFirstRowItem>
+                </CompaniesListFirstRow>
+                {companiesList
+                    .sort((a,b)=>b.id - a.id)
+                    .map(company => (
+                    <CompanyPreview key={company.id} name={company.name} city={company.city} id={company.id}/>
                 ))}
             </CompaniesListTable>
 

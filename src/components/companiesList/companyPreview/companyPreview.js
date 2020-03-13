@@ -1,22 +1,31 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const CompanyPreviewWrapper = styled.div`
+const CompanyPreviewWrapper = styled.tr`
 
 `;
-
-const CompanyPreviewName = styled.h3`
-
+const Row = styled.td`
+padding: 1rem;
+`
+const CompanyPreviewName = styled.p`
+text-align: center;
 `;
 
 const CompanyPreviewCity = styled.p`
-
+text-align: center;
 `;
 
-const CompanyPreview = ({name, city}) =>(
+const CompanyPreview = ({name, city,id}) => (
     <CompanyPreviewWrapper>
-        <CompanyPreviewName>{name}</CompanyPreviewName>
-        <CompanyPreviewCity>{city}</CompanyPreviewCity>
+        <Row>
+            <CompanyPreviewName>{name}</CompanyPreviewName>
+        </Row>
+        <Row>
+            <CompanyPreviewName>{id}</CompanyPreviewName>
+        </Row>
+        <Row>
+            <CompanyPreviewCity>{city}</CompanyPreviewCity>
+        </Row>
     </CompanyPreviewWrapper>
 );
 
