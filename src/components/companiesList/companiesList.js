@@ -80,7 +80,12 @@ const CompaniesList = () => {
                     <CompanyPreview key={company.id} name={company.name} city={company.city} id={company.id}/>
                 ))}
             </CompaniesListTable>
-            <PaginationButtons next={toNextPage} previous={toPreviousPage} pageNum={currentCompaniesPage}/>
+            <PaginationButtons
+                next={toNextPage}
+                previous={toPreviousPage}
+                pageNum={currentCompaniesPage}
+                lastPage={lastPage}
+            />
         </CompaniesListWrapper>
     )
 };
