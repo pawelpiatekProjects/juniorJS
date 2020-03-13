@@ -6,10 +6,24 @@ const CompanyWrapper = styled.div`
 
 `;
 
+const MinDate = styled.input`
+
+`;
+
+const MaxDate = styled.input`
+
+`;
+const SortButton = styled.button`
+
+`;
+
+//todo: change last month income (sum all incomes in last month)
 const Company = (props) =>{
     const[incomes, setIncomes] = useState([]);
     const[incomeSum, setIncomeSum] = useState(0);
     const[lastMonthIncome, setLastMonthIncome] = useState(0);
+    const[minDate, setMinDate] = useState(null);
+    const[maxDate, setMaxDate] = useState(null);
 
     useEffect(()=>{
         let sum = 0;
@@ -31,6 +45,14 @@ const Company = (props) =>{
     },[]);
 
     const averageIncome = incomeSum/incomes.length;
+    const setRange = () =>{
+       const rangedIncomes =  incomes.filter(income=>{
+            if(Date.parse(income.date)>= Date.parse(minDate) && Date.parse(income.date)<= Date.parse(maxDate)){
+                return income;
+            }
+        });
+       setIncomes(rangedIncomes);
+    }
 
 
     return(
@@ -38,7 +60,9 @@ const Company = (props) =>{
             <h1>{props.location.state.id}</h1>
             <h1>Average income: {averageIncome}</h1>
             <h1>Last month income: {lastMonthIncome}</h1>
-            {console.log(lastMonthIncome)}
+            <MinDate type="date" onChange={e=>setMinDate(e.target.value)}/>
+            <MaxDate type="date" onChange={e=>setMaxDate(e.target.value)}/>
+            <SortButton onClick={setRange}>set range</SortButton>
             {incomes.map(income=>(
                 <div>
                     {/*{console.log(Date.parse(income.date))}*/}
