@@ -51,11 +51,12 @@ const CompaniesList = () => {
     const lastCompany = currentCompaniesPage * companiesOnPage;
     const firstCompany = lastCompany - companiesOnPage;
     const currentPage = companiesList.slice(firstCompany, lastCompany);
+    const lastPage = companiesList.length/companiesOnPage;
 
     const toNextPage= () =>{
-
+        if(currentCompaniesPage<lastPage){
             setCurrentCompaniesPage(currentCompaniesPage+1);
-
+        }
     };
 
     const toPreviousPage = () =>{
@@ -63,7 +64,6 @@ const CompaniesList = () => {
             setCurrentCompaniesPage(currentCompaniesPage - 1);
         }
     };
-
 
     return (
         <CompaniesListWrapper>
