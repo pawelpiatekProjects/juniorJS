@@ -66,11 +66,15 @@ const CompaniesList = (props) => {
         }
     };
 
-    const getCompanyData =(id) =>{
+    const getCompanyData =(id, name, city) =>{
         // console.log(id);
                 props.history.push({
                     pathname: `/company/${id}`,
-                    state: {id: id}
+                    state: {
+                        id: id,
+                        name: name,
+                        city: city
+                    }
                 })
     }
 

@@ -16,7 +16,7 @@ text-align: center;
 `;
 
 const CompanyPreview = ({name, city,id, click}) => (
-    <CompanyPreviewWrapper onClick={()=>click(id)}>
+    <CompanyPreviewWrapper onClick={()=>click(id,name,city)}>
         <Row>
             <CompanyPreviewName >{id}</CompanyPreviewName>
         </Row>
