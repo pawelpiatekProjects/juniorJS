@@ -52,7 +52,19 @@ const Company = (props) =>{
             }
         });
        setIncomes(rangedIncomes);
-    }
+    };
+
+    const incomesList = (
+        incomes.length === 0 ? <p>there is no incomes</p>
+             :
+            incomes.map(income=>(
+                <div>
+                    {/*{console.log(Date.parse(income.date))}*/}
+                    <p>{income.value}</p>
+                    <p>{income.date.toString()}</p>
+                </div>
+            ))
+    );
 
 
     return(
@@ -63,13 +75,7 @@ const Company = (props) =>{
             <MinDate type="date" onChange={e=>setMinDate(e.target.value)}/>
             <MaxDate type="date" onChange={e=>setMaxDate(e.target.value)}/>
             <SortButton onClick={setRange}>set range</SortButton>
-            {incomes.map(income=>(
-                <div>
-                    {/*{console.log(Date.parse(income.date))}*/}
-                    <p>{income.value}</p>
-                    <p>{income.date.toString()}</p>
-                </div>
-            ))}
+            {incomesList}
         </CompanyWrapper>
     )
 };
