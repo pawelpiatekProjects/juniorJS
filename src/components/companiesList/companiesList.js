@@ -39,7 +39,9 @@ color: ${colors.white};
 `;
 
 const CompaniesFilterInput = styled.input`
-
+border: 1px solid ${colors.inputColor};
+padding: .5rem;
+width: 30%;
 `;
 //todo: loading screen
 //todo: change to sorting by incomes
@@ -93,7 +95,9 @@ const CompaniesList = (props) => {
 
     return (
         <CompaniesListWrapper>
-            <CompaniesFilterInput onChange={SearchInputMethod}/>
+            <CompaniesFilterInput
+                placeholder="Search"
+                onChange={SearchInputMethod}/>
             <CompaniesListTable>
                 <CompaniesListThead>
                     <CompaniesListFirstRow>

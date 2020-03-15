@@ -1,11 +1,33 @@
 import React from 'react';
 import styled from 'styled-components';
+import * as colors from '../../assets/colors';
 
 const PaginationButtonsWrappper =styled.div`
-
+width: 100%;
+margin: 0 auto;
+text-align: center;
 `;
-
+//todo: add disabled class
 const PaginationButton = styled.button`
+border: none;
+padding: .5rem;
+background-color: ${colors.primaryBlue};
+color: ${colors.white};
+font-size: 1.6rem;
+margin: 0 1rem;
+width: 9rem;
+
+&:disabled{
+background: ${colors.primaryBlueDisabled};
+cursor: not-allowed;
+    &:hover{
+    background: ${colors.primaryBlueDisabled};
+    cursor: not-allowed;
+    }
+}
+&:hover{
+background: ${colors.primaryBlueHover};
+}
 
 `;
 
