@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import * as colors from '../../assets/colors';
+import Charts from '../chart/chart';
+import groupArray from 'group-array';
 
 const CompanyWrapper = styled.div`
 width: 60%;
@@ -100,6 +102,7 @@ const Company = (props) => {
             })
             .then(incomes => {
                 incomes.map(income => {
+                    income.date=new Date(income.date.slice(0,10));
                     const incomeNum = parseFloat(income.value);
                     sum += incomeNum;
                 })
@@ -138,9 +141,11 @@ const Company = (props) => {
                                 {/*{console.log(Date.parse(income.date))}*/}
                                 <p>{income.value}</p>
                                 <p>{income.date.toString()}</p>
+
                             </div>
                         ))
                     }
+
                 </CompanyContent>
             )
 
@@ -161,6 +166,7 @@ const Company = (props) => {
                     <SortButton onClick={setRange}>Set range</SortButton>
                 </RangeContent>
                 {incomesList}
+
             </CompanyInfo>
 
         </CompanyWrapper>
