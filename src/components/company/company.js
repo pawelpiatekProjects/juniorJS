@@ -93,38 +93,31 @@ const Company = (props) => {
     const info = props.location.state.info.split(".");
 
     useEffect(() => {
-        let sum = 0;
         axios.get(`https://recruitment.hal.skygate.io/incomes/${info[0]}`)
             .then(response => {
                 const sortedIncomes = response.data.incomes.sort((a, b) => Date.parse(a.date) - Date.parse(b.date))
                 setIncomes(sortedIncomes)
                 return sortedIncomes;
             })
-            .then(incomes => {
-                incomes.map(income => {
-                    income.date=new Date(income.date.slice(0,10));
-                    const incomeNum = parseFloat(income.value);
-                    sum += incomeNum;
+            .then(response=>{
+                let sum = 0;
+                response.map(el=>{
+                    sum+= parseFloat(el.value);
                 })
-                setIncomeSum(sum);
-                setLastMonthIncome(parseFloat(incomes[incomes.length - 1].value))
-
-                return incomes
+                setIncomeSum(sum)
             })
-            .then(incomes=>{
-                setIncomes(incomes, incomes.date);
-                console.log(incomes) //todo: change
-            })
-
     }, []);
 
     const averageIncome = incomeSum / incomes.length;
     const setRange = () => {
+        let sum=0;
         const rangedIncomes = incomes.filter(income => {
             if (Date.parse(income.date) >= Date.parse(minDate) && Date.parse(income.date) <= Date.parse(maxDate)) {
+                sum+=parseFloat(income.value);
                 return income;
             }
-        });
+        })
+        setIncomeSum(sum);
         setIncomes(rangedIncomes);
     };
 
@@ -133,6 +126,10 @@ const Company = (props) => {
             :
             (
                 <CompanyContent>
+                    <CompanyContentHeader>
+                        Total income:
+                        <span>{incomeSum.toFixed(2)}</span>
+                    </CompanyContentHeader>
                     <CompanyContentHeader>
                         Average income:
                         <span>{averageIncome.toFixed(2)}</span>
