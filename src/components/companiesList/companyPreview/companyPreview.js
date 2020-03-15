@@ -1,8 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import * as colors from '../../../assets/colors';
 
 const CompanyPreviewWrapper = styled.tr`
-
+&:hover{
+cursor: pointer;
+background-color: ${colors.tableBorderGray2};
+}
 `;
 const Row = styled.td`
 padding: 1rem;
