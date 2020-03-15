@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import {Redirect, withRouter} from 'react-router-dom';
 import CompanyPreview from './companyPreview/companyPreview';
 import PaginationButtons from '../paginationButtons/paginationButtons'
 import * as colors from '../../assets/colors';
@@ -62,6 +61,12 @@ const CompaniesList = (props) => {
 
     const SearchInputMethod = e => {
         setSearchInputValue(e.target.value);
+        console.log(e.target.value.length)
+        if(e.target.value.length>0){
+            setCompaniesOnPage(companiesList.length)
+        }else{
+            setCompaniesOnPage(20)
+        }
     };
 
     const lastCompany = currentCompaniesPage * companiesOnPage;

@@ -108,6 +108,12 @@ const Company = (props) => {
                 })
                 setIncomeSum(sum);
                 setLastMonthIncome(parseFloat(incomes[incomes.length - 1].value))
+
+                return incomes
+            })
+            .then(incomes=>{
+                setIncomes(incomes, incomes.date);
+                console.log(incomes) //todo: change
             })
 
     }, []);
