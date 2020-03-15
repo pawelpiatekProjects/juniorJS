@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
+
 const GlobalStyle = createGlobalStyle`
   html {
     box-sizing: border-box;
@@ -14,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     margin: 0;
-    padding: 80px 65px 0;
+    padding: 8rem 6.5rem;
     font-family: 'Montserrat';
   }
 

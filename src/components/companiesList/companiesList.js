@@ -81,14 +81,18 @@ const CompaniesList = (props) => {
         }
     };
 
+
     const getCompanyData = (id, name, city) => {
         // console.log(id);
+        const info = `${id}.${name}.${city}`.toString();
+        console.log(info);
+
+        console.log(info.split("."));
+
         props.history.push({
             pathname: `/company/${id}`,
             state: {
-                id: id,
-                name: name,
-                city: city
+                info:info
             }
         })
     }
