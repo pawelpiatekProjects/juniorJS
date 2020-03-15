@@ -120,11 +120,17 @@ const Company = (props) => {
 
     const averageIncome = incomeSum / incomes.length;
     const setRange = () => {
-        const rangedIncomes = incomes.filter(income => {
+        let sum = 0;
+        const rangedIncomes = incomes
+            .filter(income => {
             if (Date.parse(income.date) >= Date.parse(minDate) && Date.parse(income.date) <= Date.parse(maxDate)) {
                 return income;
             }
-        });
+            })
+            // .map(income=>{
+            //     console.log(income)
+            // })
+        // console.log(sum)
         setIncomes(rangedIncomes);
     };
 
@@ -140,6 +146,10 @@ const Company = (props) => {
                     <CompanyContentHeader>
                         Last month income:
                         <span>{lastMonthIncome.toFixed(2)}</span>
+                    </CompanyContentHeader>
+                    <CompanyContentHeader>
+                        Total income:
+                        <span>{incomeSum.toFixed(2)}</span>
                     </CompanyContentHeader>
                     {
                         incomes.map(income => (

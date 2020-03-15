@@ -44,18 +44,23 @@ width: 30%;
 `;
 //todo: loading screen
 //todo: change to sorting by incomes
-//todo: add buttons to pagination
 const CompaniesList = (props) => {
     const [searchInputValue, setSearchInputValue] = useState('');
     const [companiesList, setCompaniesList] = useState([]);
     const [currentCompaniesPage, setCurrentCompaniesPage] = useState(1);
     const [companiesOnPage, setCompaniesOnPage] = useState(20);
+    const [income, setIncome] = useState([]);
 
     useEffect(() => {
         axios.get('https://recruitment.hal.skygate.io/companies')
             .then(response => {
-                console.log(response.data);
-                setCompaniesList(response.data.sort((a, b) => b.id - a.id));
+                const sorted = response.data.sort((a, b) => b.id - a.id)
+
+                return sorted;
+            })
+            .then(response=>{
+              setCompaniesList(response)
+
             })
     }, [])
 
@@ -88,11 +93,8 @@ const CompaniesList = (props) => {
 
 
     const getCompanyData = (id, name, city) => {
-        // console.log(id);
-        const info = `${id}.${name}.${city}`.toString();
-        console.log(info);
 
-        console.log(info.split("."));
+        const info = `${id}.${name}.${city}`.toString();
 
         props.history.push({
             pathname: `/company/${id}`,
@@ -117,23 +119,31 @@ const CompaniesList = (props) => {
                 </CompaniesListThead>
                 <CompaniesListTbody>
                     {currentPage
+
                         .filter(company => company.name.toLowerCase().includes(searchInputValue.toLowerCase()))
-                        .map(company => (
-                            <CompanyPreview
-                                click={getCompanyData}
-                                key={company.id}
-                                name={company.name}
-                                city={company.city}
-                                id={company.id}/>
-                        ))}
+                        .map(company => {
+                            return(
+                                    <CompanyPreview
+                                        click={getCompanyData}
+                                        key={company.id}
+                                        name={company.name}
+                                        city={company.city}
+                                        id={company.id}/>
+                                )
+                            }
+                        )}
                 </CompaniesListTbody>
             </CompaniesListTable>
-            <PaginationButtons
-                next={toNextPage}
-                previous={toPreviousPage}
-                pageNum={currentCompaniesPage}
-                lastPage={lastPage}
-            />
+            {/*switching between pagination mode */}
+            {companiesOnPage != companiesList.length ? (
+                <PaginationButtons
+                    next={toNextPage}
+                    previous={toPreviousPage}
+                    pageNum={currentCompaniesPage}
+                    lastPage={lastPage}
+                />
+            ) : null}
+
         </CompaniesListWrapper>
     )
 };
