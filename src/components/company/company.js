@@ -53,7 +53,7 @@ appearance: none;
   margin: 0 .5rem;
   height: 3rem;
 `;
-const SortButton = styled.button`
+const Button = styled.button`
 border: none;
 background-color: ${colors.primaryBlue};
 color: ${colors.white};
@@ -82,6 +82,45 @@ margin: 5rem auto;
 text-align: center;
 `;
 
+const IncomeContainer = styled.div`
+margin-top: 5rem;
+`;
+
+const IncomeContainerContent = styled.div`
+display: ${props=>props.show ? 'block' : 'none'};
+`;
+
+const IncomeContainerHeading = styled.div`
+background-color: ${colors.tableBorderGray1};
+padding: 2rem;
+width: 100%;
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: space-between;
+`;
+
+const IncomeContainerHeadingContent = styled.h1`
+
+`;
+
+
+const Income = styled.div`
+border: 1px solid ${colors.tableBorderGray1};
+background-color: ${colors.tableBorderGray2};
+margin-top: 1rem;
+`;
+
+
+const IncomeDate = styled.h3`
+font-size: 1.8rem;
+text-align: center;
+`;
+
+const IncomeValue = styled.p`
+text-align: center;
+`;
+
 //todo: change last month income (sum all incomes in last month)
 const Company = (props) => {
     const [incomes, setIncomes] = useState([]);
@@ -89,6 +128,7 @@ const Company = (props) => {
     const [lastMonthIncome, setLastMonthIncome] = useState(0);
     const [minDate, setMinDate] = useState(null);
     const [maxDate, setMaxDate] = useState(null);
+    const [showIncomes, setShowIncomes] = useState(false);
 
     const info = props.location.state.info.split(".");
 
@@ -131,7 +171,7 @@ const Company = (props) => {
         })
         setIncomeSum(sum);
         setIncomes(rangedIncomes);
-        const lastMonthIncomeDate = rangedIncomes[rangedIncomes.length-1].date.slice(0,7);
+        const lastMonthIncomeDate = rangedIncomes[rangedIncomes.length - 1].date.slice(0, 7);
         let lastMonthIncome = 0;
         rangedIncomes.filter(month => (
             month.date.slice(0, 7).toString() === lastMonthIncomeDate
@@ -159,16 +199,24 @@ const Company = (props) => {
                         Last month income:
                         <span>{lastMonthIncome.toFixed(2)}</span>
                     </CompanyContentHeader>
-                    {
-                        incomes.map(income => (
-                            <div>
-                                <p>{income.value}</p>
-                                <p>{income.date.toString()}</p>
+                    <IncomeContainer>
+                        <IncomeContainerHeading>
+                            <IncomeContainerHeadingContent>Incomes</IncomeContainerHeadingContent>
+                            <Button onClick={()=>setShowIncomes(!showIncomes)}>
+                                {showIncomes ? 'Hide incomes' : 'Show incomes'}
+                            </Button>
+                        </IncomeContainerHeading>
 
-                            </div>
-                        ))
-                    }
+                        <IncomeContainerContent show={showIncomes}>
+                            {incomes.map(income => (
+                                <Income>
+                                    <IncomeDate>Date: {income.date.toString().slice(0,10)}</IncomeDate>
+                                    <IncomeValue>Value: {income.value}</IncomeValue>
+                                </Income>
+                            ))}
+                        </IncomeContainerContent>
 
+                    </IncomeContainer>
                 </CompanyContent>
             )
 
@@ -186,7 +234,7 @@ const Company = (props) => {
                 <RangeContent>
                     <MinDate type="date" onChange={e => setMinDate(e.target.value)}/>
                     <MaxDate type="date" onChange={e => setMaxDate(e.target.value)}/>
-                    <SortButton onClick={setRange}>Set range</SortButton>
+                    <Button onClick={setRange}>Set range</Button>
                 </RangeContent>
                 {incomesList}
 
