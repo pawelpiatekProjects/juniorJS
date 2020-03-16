@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import * as colors from '../../assets/colors';
-import Charts from '../chart/chart';
+
 
 
 const CompanyWrapper = styled.div`
@@ -92,6 +92,18 @@ background-color: ${colors.primaryBlue};
 color: ${colors.white};
 padding: .5rem;
 height: 3rem;
+
+&:disabled{
+background: ${colors.primaryBlueDisabled};
+cursor: not-allowed;
+    &:hover{
+    background: ${colors.primaryBlueDisabled};
+    cursor: not-allowed;
+    }
+}
+&:hover{
+background: ${colors.primaryBlueHover};
+}
 
 @media(max-width: 500px){
 font-size: 1.4rem;
@@ -209,7 +221,7 @@ font-size: 1.2rem;
 }
 `;
 
-//todo: change last month income (sum all incomes in last month)
+
 const Company = (props) => {
     const [incomes, setIncomes] = useState([]);
     const [incomeSum, setIncomeSum] = useState(0);
@@ -217,6 +229,7 @@ const Company = (props) => {
     const [minDate, setMinDate] = useState(null);
     const [maxDate, setMaxDate] = useState(null);
     const [showIncomes, setShowIncomes] = useState(false);
+    const [canDisplayIncome, setCanDisplayIncome] = useState(true);
 
     const info = props.location.state.info.split(".");
 
@@ -257,22 +270,28 @@ const Company = (props) => {
                 return income;
             }
         })
-        setIncomeSum(sum);
-        setIncomes(rangedIncomes);
-        const lastMonthIncomeDate = rangedIncomes[rangedIncomes.length - 1].date.slice(0, 7);
-        let lastMonthIncome = 0;
-        rangedIncomes.filter(month => (
-            month.date.slice(0, 7).toString() === lastMonthIncomeDate
-        ))
-            .map(el => {
-                lastMonthIncome += parseFloat(el.value);
-            })
-        setLastMonthIncome(lastMonthIncome);
-    };
+        if(rangedIncomes.length>0){
+            setCanDisplayIncome(true);
+            console.log(rangedIncomes)
+            setIncomeSum(sum);
+            setIncomes(rangedIncomes);
+            const lastMonthIncomeDate = rangedIncomes[rangedIncomes.length - 1].date.slice(0, 7);
+            let lastMonthIncome = 0;
+            rangedIncomes.filter(month => (
+                month.date.slice(0, 7).toString() === lastMonthIncomeDate
+            ))
+                .map(el => {
+                    lastMonthIncome += parseFloat(el.value);
+                })
+            setLastMonthIncome(lastMonthIncome);
+        }else{
+            setCanDisplayIncome(false);
+        }
 
+    };
+//<EmptyMessage>There is no income during this period</EmptyMessage>
     const incomesList = (
-        incomes.length === 0 ? <EmptyMessage>There is no income during this period</EmptyMessage>
-            :
+        canDisplayIncome ?
             (
                 <CompanyContent>
                     <CompanyContentHeader>
@@ -307,6 +326,8 @@ const Company = (props) => {
                     </IncomeContainer>
                 </CompanyContent>
             )
+            :<EmptyMessage>There is no income during this period</EmptyMessage>
+
 
     );
 
@@ -322,7 +343,11 @@ const Company = (props) => {
                 <RangeContent>
                     <MinDate type="date" onChange={e => setMinDate(e.target.value)}/>
                     <MaxDate type="date" onChange={e => setMaxDate(e.target.value)}/>
-                    <Button onClick={setRange}>Set range</Button>
+                    <Button
+                        disabled={
+                            (maxDate=== null || minDate=== null) || (maxDate===null && minDate===null)   ? true : false
+                        }
+                        onClick={setRange}>Set range</Button>
                 </RangeContent>
                 {incomesList}
 
