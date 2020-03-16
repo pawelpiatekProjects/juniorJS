@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import * as colors from '../../assets/colors';
 import Charts from '../chart/chart';
-import groupArray from 'group-array';
+
 
 const CompanyWrapper = styled.div`
 width: 60%;
@@ -99,40 +99,47 @@ const Company = (props) => {
                 setIncomes(sortedIncomes)
                 return sortedIncomes;
             })
-            .then(response=>{
+            .then(response => {
                 let sum = 0;
-                response.map(el=>{
-                    sum+= parseFloat(el.value);
+                response.map(el => {
+                    sum += parseFloat(el.value);
                 })
                 setIncomeSum(sum)
+                return response;
+            })
+            .then(array => {
+                let lastMonthIncome = 0;
+                const lastIncomeDate = array[array.length - 1].date.slice(0, 7);
+                array.filter(month => (
+                    month.date.slice(0, 7).toString() === lastIncomeDate
+                ))
+                    .map(el => {
+                        lastMonthIncome += parseFloat(el.value);
+                    })
+                setLastMonthIncome(lastMonthIncome)
             })
     }, []);
-
+//todo: fix error when range is 0
     const averageIncome = incomeSum / incomes.length;
     const setRange = () => {
-<<<<<<< HEAD
         let sum = 0;
-        const rangedIncomes = incomes
-            .filter(income => {
-=======
-        let sum=0;
         const rangedIncomes = incomes.filter(income => {
->>>>>>> test
             if (Date.parse(income.date) >= Date.parse(minDate) && Date.parse(income.date) <= Date.parse(maxDate)) {
-                sum+=parseFloat(income.value);
+                sum += parseFloat(income.value);
                 return income;
             }
-<<<<<<< HEAD
-            })
-            // .map(income=>{
-            //     console.log(income)
-            // })
-        // console.log(sum)
-=======
         })
         setIncomeSum(sum);
->>>>>>> test
         setIncomes(rangedIncomes);
+        const lastMonthIncomeDate = rangedIncomes[rangedIncomes.length-1].date.slice(0,7);
+        let lastMonthIncome = 0;
+        rangedIncomes.filter(month => (
+            month.date.slice(0, 7).toString() === lastMonthIncomeDate
+        ))
+            .map(el => {
+                lastMonthIncome += parseFloat(el.value);
+            })
+        setLastMonthIncome(lastMonthIncome);
     };
 
     const incomesList = (
@@ -152,14 +159,9 @@ const Company = (props) => {
                         Last month income:
                         <span>{lastMonthIncome.toFixed(2)}</span>
                     </CompanyContentHeader>
-                    <CompanyContentHeader>
-                        Total income:
-                        <span>{incomeSum.toFixed(2)}</span>
-                    </CompanyContentHeader>
                     {
                         incomes.map(income => (
                             <div>
-                                {/*{console.log(Date.parse(income.date))}*/}
                                 <p>{income.value}</p>
                                 <p>{income.date.toString()}</p>
 
