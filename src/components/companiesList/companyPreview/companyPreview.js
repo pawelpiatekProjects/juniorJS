@@ -11,24 +11,34 @@ background-color: ${colors.tableBorderGray2};
 const Row = styled.td`
 padding: 1rem;
 `
-const CompanyPreviewName = styled.p`
+const CompanyPreviewText = styled.p`
 text-align: center;
+
+@media(max-width: 650px){
+
+font-size: 1.4rem;
+
+}
+
+@media(max-width: 450px){
+
+font-size: 1.2rem;
+
+}
 `;
 
-const CompanyPreviewCity = styled.p`
-text-align: center;
-`;
+
 
 const CompanyPreview = ({name, city,id, click}) => (
     <CompanyPreviewWrapper onClick={()=>click(id,name,city)}>
         <Row>
-            <CompanyPreviewName >{id}</CompanyPreviewName>
+            <CompanyPreviewText >{id}</CompanyPreviewText>
         </Row>
         <Row>
-            <CompanyPreviewName>{name}</CompanyPreviewName>
+            <CompanyPreviewText>{name}</CompanyPreviewText>
         </Row>
         <Row>
-            <CompanyPreviewCity>{city}</CompanyPreviewCity>
+            <CompanyPreviewText>{city}</CompanyPreviewText>
         </Row>
     </CompanyPreviewWrapper>
 );

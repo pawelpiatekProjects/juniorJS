@@ -5,6 +5,10 @@ const GlobalStyle = createGlobalStyle`
   html {
     box-sizing: border-box;
     font-size: 62.5%; //1rem = 10px
+    
+    @media(max-width: 700px){
+    font-size: 56.25%;
+    }
   }
 
   *,
@@ -17,6 +21,14 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 8rem 6.5rem;
     font-family: 'Montserrat';
+    
+    @media(max-width: 700px){
+    padding: 4rem 3rem;
+    }
+    
+    @media(max-width: 500px){
+    padding: 4rem .5rem;
+    }
   }
 
   button {

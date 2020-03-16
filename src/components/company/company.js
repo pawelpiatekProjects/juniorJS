@@ -8,6 +8,16 @@ import Charts from '../chart/chart';
 const CompanyWrapper = styled.div`
 width: 60%;
 margin: 0 auto;
+@media(max-width: 1400px){
+width: 70%;
+}
+
+@media(max-width: 1000px){
+width: 90%;
+}
+@media(max-width: 800px){
+width: 100%;
+}
 `;
 
 const CompanyWrapperHeading = styled.div`
@@ -26,6 +36,19 @@ margin: 0 auto;
 const CompanyWrapperHeadingItem = styled.h1`
 display: inline-block;
 margin: 0 3rem;
+
+@media(max-width: 850px){
+font-size: 1.8rem;
+}
+
+@media(max-width: 650px){
+font-size: 1.4rem;
+margin: 0 1rem;
+}
+
+@media(max-width: 500px){
+font-size: 1.2rem;
+}
 `;
 
 const RangeContent = styled.div`
@@ -42,6 +65,11 @@ appearance: none;
   padding: .5rem;
   margin: 0 .5rem;
   height: 3rem;
+  
+  @media(max-width: 350px){
+display: block;
+margin: 1rem auto;
+}
 `;
 
 const MaxDate = styled.input`
@@ -52,6 +80,11 @@ appearance: none;
   padding: .5rem;
   margin: 0 .5rem;
   height: 3rem;
+  
+  @media(max-width: 350px){
+display: block;
+margin: 1rem auto;
+}
 `;
 const Button = styled.button`
 border: none;
@@ -59,6 +92,10 @@ background-color: ${colors.primaryBlue};
 color: ${colors.white};
 padding: .5rem;
 height: 3rem;
+
+@media(max-width: 500px){
+font-size: 1.4rem;
+}
 `;
 
 const CompanyContent = styled.div`
@@ -73,6 +110,14 @@ font-weight: 400;
 span{
 font-weight: 700;
 margin-left: .5rem;
+}
+
+@media(max-width: 650px){
+font-size: 1.8rem;
+}
+
+@media(max-width: 450px){
+font-size: 1.4rem;
 }
 `;
 
@@ -102,6 +147,18 @@ justify-content: space-between;
 
 const IncomeContainerHeadingContent = styled.h1`
 
+@media(max-width: 850px){
+font-size: 1.8rem;
+}
+
+@media(max-width: 650px){
+font-size: 1.4rem;
+margin: 0 1rem;
+}
+
+@media(max-width: 500px){
+font-size: 1.2rem;
+}
 `;
 
 
@@ -109,16 +166,47 @@ const Income = styled.div`
 border: 1px solid ${colors.tableBorderGray1};
 background-color: ${colors.tableBorderGray2};
 margin-top: 1rem;
+
+@media(max-width: 650px){
+margin-top: .2rem;
+padding: 1rem;
+}
 `;
 
 
 const IncomeDate = styled.h3`
 font-size: 1.8rem;
 text-align: center;
+
+@media(max-width: 850px){
+font-size: 1.8rem;
+}
+
+@media(max-width: 650px){
+font-size: 1.4rem;
+margin: 0 1rem;
+}
+
+@media(max-width: 500px){
+font-size: 1.2rem;
+}
 `;
 
 const IncomeValue = styled.p`
 text-align: center;
+
+@media(max-width: 850px){
+font-size: 1.8rem;
+}
+
+@media(max-width: 650px){
+font-size: 1.4rem;
+margin: 0 1rem;
+}
+
+@media(max-width: 500px){
+font-size: 1.2rem;
+}
 `;
 
 //todo: change last month income (sum all incomes in last month)
@@ -209,7 +297,7 @@ const Company = (props) => {
 
                         <IncomeContainerContent show={showIncomes}>
                             {incomes.map(income => (
-                                <Income>
+                                <Income key={income.date.toString()+income.value.toString()}>
                                     <IncomeDate>Date: {income.date.toString().slice(0,10)}</IncomeDate>
                                     <IncomeValue>Value: {income.value}</IncomeValue>
                                 </Income>

@@ -8,6 +8,16 @@ import * as colors from '../../assets/colors';
 const CompaniesListWrapper = styled.div`
 width: 50%;
 margin: 1rem auto;
+@media(max-width: 1400px){
+width: 70%;
+}
+
+@media(max-width: 1000px){
+width: 80%;
+}
+@media(max-width: 800px){
+width: 100%;
+}
 `;
 
 const CompaniesListTable = styled.table`
@@ -35,12 +45,26 @@ const CompaniesListFirstRowItem = styled.th`
 p{
 color: ${colors.white};
 }
+
+@media(max-width: 650px){
+p{
+font-size: 1.4rem;
+}
+}
 `;
 
 const CompaniesFilterInput = styled.input`
 border: 1px solid ${colors.inputColor};
 padding: .5rem;
 width: 30%;
+
+@media(max-width: 650px){
+width: 50%;
+}
+
+@media(max-width: 450px){
+width: 100%;
+}
 `;
 //todo: loading screen
 //todo: change to sorting by incomes
