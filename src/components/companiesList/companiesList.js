@@ -68,6 +68,7 @@ width: 100%;
 `;
 //todo: loading screen
 //todo: change to sorting by incomes
+//todo: add back arrow
 const CompaniesList = (props) => {
     const [searchInputValue, setSearchInputValue] = useState('');
     const [companiesList, setCompaniesList] = useState([]);
