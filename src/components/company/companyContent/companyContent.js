@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import * as colors from "../../../assets/colors";
+import Button from '../../UIComponents/Button';
 
 const CompanyContentWrapper = styled.div`
 width: 100%;
@@ -107,29 +108,7 @@ font-size: 1.2rem;
 }
 `;
 
-const Button = styled.button`
-border: none;
-background-color: ${props=>props.isBlue ? colors.primaryBlue : colors.white};
-color: ${props=>props.isBlue ? colors.white : colors.primaryBlue};
-padding: .5rem;
-height: 3rem;
 
-&:disabled{
-background: ${colors.primaryBlueDisabled};
-cursor: not-allowed;
-    &:hover{
-    background: ${colors.primaryBlueDisabled};
-    cursor: not-allowed;
-    }
-}
-&:hover{
-background: ${props=>props.isBlue ? colors.primaryBlueHover : colors.white};
-}
-
-@media(max-width: 500px){
-font-size: 1.4rem;
-}
-`;
 
 //todo: change Button styled component to separate component
 const CompanyContent = ({incomeSum, averageIncome, lastMonthIncome, setShowIncomes, showIncomes, incomes}) => (
@@ -149,9 +128,10 @@ const CompanyContent = ({incomeSum, averageIncome, lastMonthIncome, setShowIncom
         <IncomeContainer>
             <IncomeContainerHeading>
                 <IncomeContainerHeadingContent>Incomes</IncomeContainerHeadingContent>
-                <Button isBlue onClick={() => setShowIncomes(!showIncomes)}>
-                    {showIncomes ? 'Hide incomes' : 'Show incomes'}
-                </Button>
+                <Button
+                    text={showIncomes ? 'Hide incomes' : 'Show incomes'}
+                    isBlue={true}
+                    click={() => setShowIncomes(!showIncomes)}/>
             </IncomeContainerHeading>
 
             <IncomeContainerContent show={showIncomes}>

@@ -4,6 +4,7 @@ import axios from 'axios';
 import * as colors from '../../assets/colors';
 import LoadingAnimation from '../loadingAnimation/loadingAnimation';
 import CompanyContent from './companyContent/companyContent';
+import Button from '../UIComponents/Button';
 
 
 const CompanyWrapper = styled.div`
@@ -88,30 +89,6 @@ display: block;
 margin: 1rem auto;
 }
 `;
-const Button = styled.button`
-border: none;
-background-color: ${props => props.isBlue ? colors.primaryBlue : colors.white};
-color: ${props => props.isBlue ? colors.white : colors.primaryBlue};
-padding: .5rem;
-height: 3rem;
-
-&:disabled{
-background: ${colors.primaryBlueDisabled};
-cursor: not-allowed;
-    &:hover{
-    background: ${colors.primaryBlueDisabled};
-    cursor: not-allowed;
-    }
-}
-&:hover{
-background: ${props => props.isBlue ? colors.primaryBlueHover : colors.white};
-}
-
-@media(max-width: 500px){
-font-size: 1.4rem;
-}
-`;
-
 
 const EmptyMessage = styled.h1`
 width: 100%;
@@ -178,7 +155,6 @@ const Company = (props) => {
         })
         if (rangedIncomes.length > 0) {
             setCanDisplayIncome(true);
-            console.log(rangedIncomes)
             setIncomeSum(sum);
             setIncomes(rangedIncomes);
             const lastMonthIncomeDate = rangedIncomes[rangedIncomes.length - 1].date.slice(0, 7);
@@ -195,7 +171,6 @@ const Company = (props) => {
         }
 
     };
-//<EmptyMessage>There is no income during this period</EmptyMessage>
     const incomesList = (
         canDisplayIncome ?
             (
@@ -209,21 +184,22 @@ const Company = (props) => {
                 />
             )
             : <EmptyMessage>There is no income during this period</EmptyMessage>
-
-
     );
-
     const companyInfo = (
         <CompanyInfo>
             <RangeContent>
                 <MinDate type="date" onChange={e => setMinDate(e.target.value)}/>
                 <MaxDate type="date" onChange={e => setMaxDate(e.target.value)}/>
-                <Button
-                    isBlue
-                    disabled={
-                        (maxDate === null || minDate === null) || (maxDate === null && minDate === null) ? true : false
-                    }
-                    onClick={setRange}>Set range</Button>
+
+                    <Button
+                        isBlue={true}
+                        disabled={
+                            (maxDate === null || minDate === null)
+                            || (maxDate === null && minDate === null) ? true : false
+                        }
+                        text="Set range"
+                        click={setRange}
+                    />
             </RangeContent>
             {incomesList}
         </CompanyInfo>
@@ -231,7 +207,10 @@ const Company = (props) => {
 
     return (
         <CompanyWrapper>
-            <Button isBlue onClick={() => props.history.push('/')}>Back to list</Button>
+            <Button
+                text="Back to list"
+                isBlue={true}
+                click={() => props.history.push('/')}/>
             <CompanyWrapperHeading>
                 <CompanyWrapperHeadingItem>{info[0]}</CompanyWrapperHeadingItem>
                 <CompanyWrapperHeadingItem>{info[1]}</CompanyWrapperHeadingItem>
@@ -244,7 +223,6 @@ const Company = (props) => {
                     </LoadingAnimationWrapper>
                 ) : companyInfo
             }
-
         </CompanyWrapper>
     )
 };

@@ -98,7 +98,6 @@ const CompaniesList = (props) => {
 
     const SearchInputMethod = e => {
         setSearchInputValue(e.target.value);
-        console.log(e.target.value.length)
         if (e.target.value.length > 0) {
             setCompaniesOnPage(companiesList.length)
         } else {
