@@ -10,11 +10,11 @@
 ###Demo screenshots
 ![Image description](./src/assets/images/skygate1.PNG)
 
-![Image description](./src/assets/images/skygate1.PNG)
+![Image description](./src/assets/images/skyagte2.PNG)
 
-![Image description](./src/assets/images/skygate1.PNG)
+![Image description](./src/assets/images/skygate3.PNG)
 
-![Image description](./src/assets/images/skygate1.PNG)
+![Image description](./src/assets/images/skygate4.PNG)
 
 
 ***
