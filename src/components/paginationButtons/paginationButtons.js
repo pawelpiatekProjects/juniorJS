@@ -2,12 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import * as colors from '../../assets/colors';
 
+//styled components variables
 const PaginationButtonsWrappper =styled.div`
 width: 100%;
 margin: 0 auto;
 text-align: center;
 `;
-//todo: add disabled class
+
 const PaginationButton = styled.button`
 border: none;
 padding: .5rem;
@@ -30,6 +31,7 @@ background: ${colors.primaryBlueHover};
 }
 
 `;
+//End of styled components variables
 
 const PaginationButtons = ({next, previous, pageNum, lastPage}) => {
 

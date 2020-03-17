@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
-
+// global style component which contains global styles for this app
 const GlobalStyle = createGlobalStyle`
   html {
     box-sizing: border-box;

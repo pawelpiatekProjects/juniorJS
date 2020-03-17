@@ -2,6 +2,7 @@ import React from 'react';
 import styled, {keyframes} from 'styled-components';
 import * as colors from '../../assets/colors';
 
+//styled components variables
 const spinnerAnimation = keyframes`
  0% {
     transform: rotate(0deg);
@@ -44,6 +45,7 @@ const SpinnerWrapperChild = styled.div`
     animation-delay: -0.15s;
   }
 `;
+//End of styled components variables
 
 const LoadingAnimation = ({isBig}) =>(
     <>

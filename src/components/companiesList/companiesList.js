@@ -6,6 +6,7 @@ import PaginationButtons from '../paginationButtons/paginationButtons'
 import * as colors from '../../assets/colors';
 import LoadingAnimation from "../loadingAnimation/loadingAnimation";
 
+//styled components variables
 const CompaniesListWrapper = styled.div`
 width: 50%;
 margin: 1rem auto;
@@ -73,15 +74,18 @@ width: 50%;
 margin: 5rem auto;
 text-align: center;
 `;
+//End of styled components variables
 
 const CompaniesList = (props) => {
+
+    //hooks used to manage state in this component
     const [searchInputValue, setSearchInputValue] = useState('');
-    const [companiesList, setCompaniesList] = useState([]);
-    const [currentCompaniesPage, setCurrentCompaniesPage] = useState(1);
-    const [companiesOnPage, setCompaniesOnPage] = useState(20);
+    const [companiesList, setCompaniesList] = useState([]); //list of displaying companies
+    const [currentCompaniesPage, setCurrentCompaniesPage] = useState(1); //which page of table is being displayed
+    const [companiesOnPage, setCompaniesOnPage] = useState(20); //how many companies on one page
     const [isLoading, setIsLoading] = useState(false);
 
-
+    //hook used to fetch data
     useEffect(() => {
         setIsLoading(true);
         axios.get('https://recruitment.hal.skygate.io/companies')
@@ -96,6 +100,7 @@ const CompaniesList = (props) => {
             })
     }, [])
 
+    // Method which is used to set value for input
     const SearchInputMethod = e => {
         setSearchInputValue(e.target.value);
         if (e.target.value.length > 0) {
@@ -105,30 +110,34 @@ const CompaniesList = (props) => {
         }
     };
 
+    // Variables used to calculate how many companies will be displayed on one page in the table
     const lastCompany = currentCompaniesPage * companiesOnPage;
     const firstCompany = lastCompany - companiesOnPage;
     const currentPage = companiesList.slice(firstCompany, lastCompany);
     const lastPage = companiesList.length / companiesOnPage;
 
+    // Method which is used to navigate to the next page in the table
     const toNextPage = () => {
         if (currentCompaniesPage < lastPage) {
             setCurrentCompaniesPage(currentCompaniesPage + 1);
         }
     };
 
+    // Method which is used to navigate to the previous page in the table
     const toPreviousPage = () => {
         if (currentCompaniesPage >= 2) {
             setCurrentCompaniesPage(currentCompaniesPage - 1);
         }
     };
 
+    // Method which is called after clicking on selected company.
     const getCompanyData = (id, name, city) => {
-
         const info = `${id}.${name}.${city}`.toString();
         props.history.push({
             pathname: `/company/${id}`,
             state: {
-                info: info
+                info: info // data about selected company are passed as one string. In company component
+                           // info is slicing and displaying
             }
         })
     }
@@ -136,9 +145,10 @@ const CompaniesList = (props) => {
         <>
             {isLoading ? (
                 <LoadingAnimationWrapper>
+                    {/*isBig prop is used to change style (size and color) of Loading animation spinner*/}
                     <LoadingAnimation isBig/>
                 </LoadingAnimationWrapper>
-            ): (
+            ):(
                 <CompaniesListWrapper>
                     <CompaniesFilterInput
                         placeholder="Search"
@@ -153,6 +163,7 @@ const CompaniesList = (props) => {
                             </CompaniesListFirstRow>
                         </CompaniesListThead>
                         <CompaniesListTbody>
+                            {/*Filtering by search input value and displaying companies*/}
                             {currentPage
                                 .filter(company => company.name.toLowerCase().includes(searchInputValue.toLowerCase()))
                                 .map(company => {
@@ -169,7 +180,7 @@ const CompaniesList = (props) => {
                         </CompaniesListTbody>
                     </CompaniesListTable>
                     {/*switching between pagination mode */}
-                    {companiesOnPage != companiesList.length ? (
+                    {companiesOnPage !== companiesList.length ? (
                         <PaginationButtons
                             next={toNextPage}
                             previous={toPreviousPage}

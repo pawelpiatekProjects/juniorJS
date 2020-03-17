@@ -4,6 +4,7 @@ import * as colors from '../../../assets/colors';
 import axios from 'axios';
 import LoadingAnimation from '../../loadingAnimation/loadingAnimation';
 
+//styled components variables
 const CompanyPreviewWrapper = styled.tr`
 &:hover{
 cursor: pointer;
@@ -32,20 +33,21 @@ font-size: 1.2rem;
 const SpinnerWrapper = styled.div`
 
 `;
+//End of styled components variables
 
 
 
 const CompanyPreview = ({name, city,id, click}) => {
-    const [companyData, setCompanyData] = useState([]);
-    const [incomesSum, setIncomesSum] = useState(0);
+
+    //hooks used to manage state in this component
+    const [incomesSum, setIncomesSum] = useState(0); //total income
     const [isLoading, setIsLoading] = useState(false);
 
+    //hook used to fetch data
     useEffect(()=>{
         setIsLoading(true);
         axios.get(`https://recruitment.hal.skygate.io/incomes/${id}`)
             .then(response=>{
-                setCompanyData(response.data.incomes);
-
                 return response.data.incomes;
             })
             .then(incomes => {
@@ -54,13 +56,12 @@ const CompanyPreview = ({name, city,id, click}) => {
                 setIncomesSum(sum);
                 setIsLoading(false);
             })
-
     },[])
 
     return(
             <CompanyPreviewWrapper onClick={()=>click(id,name,city)}>
                 <Row>
-                    <CompanyPreviewText >{id}</CompanyPreviewText>
+                    <CompanyPreviewText>{id}</CompanyPreviewText>
                 </Row>
                 <Row>
                     <CompanyPreviewText>{name}</CompanyPreviewText>
@@ -70,7 +71,7 @@ const CompanyPreview = ({name, city,id, click}) => {
                 </Row>
                 <Row>
                     <SpinnerWrapper>
-                        {isLoading ? <LoadingAnimation isBig={false}/> :<p>{incomesSum.toFixed(2)}</p>}
+                        {isLoading ? <LoadingAnimation isBig={false}/> :<CompanyPreviewText>{incomesSum.toFixed(2)}</CompanyPreviewText>}
                     </SpinnerWrapper>
                 </Row>
             </CompanyPreviewWrapper>

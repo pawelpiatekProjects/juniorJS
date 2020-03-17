@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import * as colors from "../../../assets/colors";
 import Button from '../../UIComponents/Button';
 
+
+//styled components variables
 const CompanyContentWrapper = styled.div`
 width: 100%;
 margin: 5rem auto;
@@ -107,10 +109,9 @@ margin: 0 1rem;
 font-size: 1.2rem;
 }
 `;
+//End of styled components variables
 
 
-
-//todo: change Button styled component to separate component
 const CompanyContent = ({incomeSum, averageIncome, lastMonthIncome, setShowIncomes, showIncomes, incomes}) => (
     <CompanyContentWrapper>
         <CompanyContentHeader>
@@ -135,6 +136,7 @@ const CompanyContent = ({incomeSum, averageIncome, lastMonthIncome, setShowIncom
             </IncomeContainerHeading>
 
             <IncomeContainerContent show={showIncomes}>
+                {/*single income*/}
                 {incomes.map(income => (
                     <Income key={income.date.toString() + income.value.toString()}>
                         <IncomeDate>Date: {income.date.toString().slice(0, 10)}</IncomeDate>
