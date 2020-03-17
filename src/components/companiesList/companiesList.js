@@ -4,6 +4,7 @@ import axios from 'axios';
 import CompanyPreview from './companyPreview/companyPreview';
 import PaginationButtons from '../paginationButtons/paginationButtons'
 import * as colors from '../../assets/colors';
+import LoadingAnimation from "../loadingAnimation/loadingAnimation";
 
 const CompaniesListWrapper = styled.div`
 width: 50%;
@@ -66,35 +67,41 @@ width: 50%;
 width: 100%;
 }
 `;
-//todo: loading screen
-//todo: change to sorting by incomes
-//todo: add back arrow
+
+const LoadingAnimationWrapper = styled.div`
+width: 50%;
+margin: 5rem auto;
+text-align: center;
+`;
+
 const CompaniesList = (props) => {
     const [searchInputValue, setSearchInputValue] = useState('');
     const [companiesList, setCompaniesList] = useState([]);
     const [currentCompaniesPage, setCurrentCompaniesPage] = useState(1);
     const [companiesOnPage, setCompaniesOnPage] = useState(20);
-    const [income, setIncome] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
 
     useEffect(() => {
+        setIsLoading(true);
         axios.get('https://recruitment.hal.skygate.io/companies')
             .then(response => {
                 const sorted = response.data.sort((a, b) => b.id - a.id)
 
                 return sorted;
             })
-            .then(response=>{
-              setCompaniesList(response)
-
+            .then(response => {
+                setCompaniesList(response)
+                setIsLoading(false);
             })
     }, [])
 
     const SearchInputMethod = e => {
         setSearchInputValue(e.target.value);
         console.log(e.target.value.length)
-        if(e.target.value.length>0){
+        if (e.target.value.length > 0) {
             setCompaniesOnPage(companiesList.length)
-        }else{
+        } else {
             setCompaniesOnPage(20)
         }
     };
@@ -116,60 +123,63 @@ const CompaniesList = (props) => {
         }
     };
 
-
     const getCompanyData = (id, name, city) => {
 
         const info = `${id}.${name}.${city}`.toString();
-
         props.history.push({
             pathname: `/company/${id}`,
             state: {
-                info:info
+                info: info
             }
         })
     }
-
     return (
-        <CompaniesListWrapper>
-            <CompaniesFilterInput
-                placeholder="Search"
-                onChange={SearchInputMethod}/>
-            <CompaniesListTable>
-                <CompaniesListThead>
-                    <CompaniesListFirstRow>
-                        <CompaniesListFirstRowItem><p>Id</p></CompaniesListFirstRowItem>
-                        <CompaniesListFirstRowItem><p>Name</p></CompaniesListFirstRowItem>
-                        <CompaniesListFirstRowItem><p>City</p></CompaniesListFirstRowItem>
-                    </CompaniesListFirstRow>
-                </CompaniesListThead>
-                <CompaniesListTbody>
-                    {currentPage
-
-                        .filter(company => company.name.toLowerCase().includes(searchInputValue.toLowerCase()))
-                        .map(company => {
-                            return(
-                                    <CompanyPreview
-                                        click={getCompanyData}
-                                        key={company.id}
-                                        name={company.name}
-                                        city={company.city}
-                                        id={company.id}/>
-                                )
-                            }
-                        )}
-                </CompaniesListTbody>
-            </CompaniesListTable>
-            {/*switching between pagination mode */}
-            {companiesOnPage != companiesList.length ? (
-                <PaginationButtons
-                    next={toNextPage}
-                    previous={toPreviousPage}
-                    pageNum={currentCompaniesPage}
-                    lastPage={lastPage}
-                />
-            ) : null}
-
-        </CompaniesListWrapper>
+        <>
+            {isLoading ? (
+                <LoadingAnimationWrapper>
+                    <LoadingAnimation/>
+                </LoadingAnimationWrapper>
+            ): (
+                <CompaniesListWrapper>
+                    <CompaniesFilterInput
+                        placeholder="Search"
+                        onChange={SearchInputMethod}/>
+                    <CompaniesListTable>
+                        <CompaniesListThead>
+                            <CompaniesListFirstRow>
+                                <CompaniesListFirstRowItem><p>Id</p></CompaniesListFirstRowItem>
+                                <CompaniesListFirstRowItem><p>Name</p></CompaniesListFirstRowItem>
+                                <CompaniesListFirstRowItem><p>City</p></CompaniesListFirstRowItem>
+                            </CompaniesListFirstRow>
+                        </CompaniesListThead>
+                        <CompaniesListTbody>
+                            {currentPage
+                                .filter(company => company.name.toLowerCase().includes(searchInputValue.toLowerCase()))
+                                .map(company => {
+                                        return (
+                                            <CompanyPreview
+                                                click={getCompanyData}
+                                                key={company.id}
+                                                name={company.name}
+                                                city={company.city}
+                                                id={company.id}/>
+                                        )
+                                    }
+                                )}
+                        </CompaniesListTbody>
+                    </CompaniesListTable>
+                    {/*switching between pagination mode */}
+                    {companiesOnPage != companiesList.length ? (
+                        <PaginationButtons
+                            next={toNextPage}
+                            previous={toPreviousPage}
+                            pageNum={currentCompaniesPage}
+                            lastPage={lastPage}
+                        />
+                    ) : null}
+                </CompaniesListWrapper>
+            )}
+        </>
     )
 };
 export default CompaniesList;
