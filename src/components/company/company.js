@@ -26,6 +26,7 @@ background-color: ${colors.primaryBlue};
 padding: 2rem;
 color: ${colors.white};
 text-align: center;
+margin-top: 2rem;
 `;
 
 const CompanyInfo = styled.div`
@@ -88,8 +89,8 @@ margin: 1rem auto;
 `;
 const Button = styled.button`
 border: none;
-background-color: ${colors.primaryBlue};
-color: ${colors.white};
+background-color: ${props=>props.isBlue ? colors.primaryBlue : colors.white};
+color: ${props=>props.isBlue ? colors.white : colors.primaryBlue};
 padding: .5rem;
 height: 3rem;
 
@@ -102,7 +103,7 @@ cursor: not-allowed;
     }
 }
 &:hover{
-background: ${colors.primaryBlueHover};
+background: ${props=>props.isBlue ? colors.primaryBlueHover : colors.white};
 }
 
 @media(max-width: 500px){
@@ -309,7 +310,7 @@ const Company = (props) => {
                     <IncomeContainer>
                         <IncomeContainerHeading>
                             <IncomeContainerHeadingContent>Incomes</IncomeContainerHeadingContent>
-                            <Button onClick={()=>setShowIncomes(!showIncomes)}>
+                            <Button isBlue onClick={()=>setShowIncomes(!showIncomes)}>
                                 {showIncomes ? 'Hide incomes' : 'Show incomes'}
                             </Button>
                         </IncomeContainerHeading>
@@ -334,7 +335,9 @@ const Company = (props) => {
 
     return (
         <CompanyWrapper>
+            <Button isBlue onClick={()=>props.history.push('/')}>Back to list</Button>
             <CompanyWrapperHeading>
+
                 <CompanyWrapperHeadingItem>{info[0]}</CompanyWrapperHeadingItem>
                 <CompanyWrapperHeadingItem>{info[1]}</CompanyWrapperHeadingItem>
                 <CompanyWrapperHeadingItem>{info[2]}</CompanyWrapperHeadingItem>
@@ -344,6 +347,7 @@ const Company = (props) => {
                     <MinDate type="date" onChange={e => setMinDate(e.target.value)}/>
                     <MaxDate type="date" onChange={e => setMaxDate(e.target.value)}/>
                     <Button
+                        isBlue
                         disabled={
                             (maxDate=== null || minDate=== null) || (maxDate===null && minDate===null)   ? true : false
                         }
