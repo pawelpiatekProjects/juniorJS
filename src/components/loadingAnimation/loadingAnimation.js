@@ -11,15 +11,12 @@ const spinnerAnimation = keyframes`
   }
 `;
 
-const LoadingAnimationWrapper = styled.div`
-
-`;
 
 const SpinnerWrapper = styled.div`
 display: inline-block;
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 15rem;
+  height: 15rem;
 `;
 
 const SpinnerWrapperChild = styled.div`
@@ -27,10 +24,10 @@ const SpinnerWrapperChild = styled.div`
   box-sizing: border-box;
   display: block;
   position: absolute;
-  width: 64px;
-  height: 64px;
-  margin: 8px;
-  border: 8px solid ${colors.primaryBlue};
+  width: 12rem;
+  height: 12rem;
+  margin: .8rem;
+  border: .8rem solid ${colors.primaryBlue};
   border-radius: 50%;
   animation: ${spinnerAnimation} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
   border-color: ${colors.primaryBlue} transparent transparent transparent;
@@ -49,14 +46,14 @@ const SpinnerWrapperChild = styled.div`
 `;
 
 const LoadingAnimation = () =>(
-    <LoadingAnimationWrapper>
+    <>
         <SpinnerWrapper>
             <SpinnerWrapperChild></SpinnerWrapperChild>
             <SpinnerWrapperChild></SpinnerWrapperChild>
             <SpinnerWrapperChild></SpinnerWrapperChild>
             <SpinnerWrapperChild></SpinnerWrapperChild>
         </SpinnerWrapper>
-    </LoadingAnimationWrapper>
+    </>
 );
 
 export default LoadingAnimation;

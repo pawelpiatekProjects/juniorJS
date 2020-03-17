@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import * as colors from '../../assets/colors';
 import LoadingAnimation from '../loadingAnimation/loadingAnimation';
-
+import CompanyContent from './companyContent/companyContent';
 
 
 const CompanyWrapper = styled.div`
@@ -90,8 +90,8 @@ margin: 1rem auto;
 `;
 const Button = styled.button`
 border: none;
-background-color: ${props=>props.isBlue ? colors.primaryBlue : colors.white};
-color: ${props=>props.isBlue ? colors.white : colors.primaryBlue};
+background-color: ${props => props.isBlue ? colors.primaryBlue : colors.white};
+color: ${props => props.isBlue ? colors.white : colors.primaryBlue};
 padding: .5rem;
 height: 3rem;
 
@@ -104,7 +104,7 @@ cursor: not-allowed;
     }
 }
 &:hover{
-background: ${props=>props.isBlue ? colors.primaryBlueHover : colors.white};
+background: ${props => props.isBlue ? colors.primaryBlueHover : colors.white};
 }
 
 @media(max-width: 500px){
@@ -112,28 +112,6 @@ font-size: 1.4rem;
 }
 `;
 
-const CompanyContent = styled.div`
-width: 100%;
-margin: 5rem auto;
-`;
-
-const CompanyContentHeader = styled.h1`
-text-align: center;
-font-weight: 400;
-
-span{
-font-weight: 700;
-margin-left: .5rem;
-}
-
-@media(max-width: 650px){
-font-size: 1.8rem;
-}
-
-@media(max-width: 450px){
-font-size: 1.4rem;
-}
-`;
 
 const EmptyMessage = styled.h1`
 width: 100%;
@@ -141,86 +119,10 @@ margin: 5rem auto;
 text-align: center;
 `;
 
-const IncomeContainer = styled.div`
-margin-top: 5rem;
-`;
-
-const IncomeContainerContent = styled.div`
-display: ${props=>props.show ? 'block' : 'none'};
-`;
-
-const IncomeContainerHeading = styled.div`
-background-color: ${colors.tableBorderGray1};
-padding: 2rem;
-width: 100%;
-display: flex;
-flex-direction: row;
-align-items: center;
-justify-content: space-between;
-`;
-
-const IncomeContainerHeadingContent = styled.h1`
-
-@media(max-width: 850px){
-font-size: 1.8rem;
-}
-
-@media(max-width: 650px){
-font-size: 1.4rem;
-margin: 0 1rem;
-}
-
-@media(max-width: 500px){
-font-size: 1.2rem;
-}
-`;
-
-
-const Income = styled.div`
-border: 1px solid ${colors.tableBorderGray1};
-background-color: ${colors.tableBorderGray2};
-margin-top: 1rem;
-
-@media(max-width: 650px){
-margin-top: .2rem;
-padding: 1rem;
-}
-`;
-
-
-const IncomeDate = styled.h3`
-font-size: 1.8rem;
+const LoadingAnimationWrapper = styled.div`
+width: 50%;
+margin: 5rem auto;
 text-align: center;
-
-@media(max-width: 850px){
-font-size: 1.8rem;
-}
-
-@media(max-width: 650px){
-font-size: 1.4rem;
-margin: 0 1rem;
-}
-
-@media(max-width: 500px){
-font-size: 1.2rem;
-}
-`;
-
-const IncomeValue = styled.p`
-text-align: center;
-
-@media(max-width: 850px){
-font-size: 1.8rem;
-}
-
-@media(max-width: 650px){
-font-size: 1.4rem;
-margin: 0 1rem;
-}
-
-@media(max-width: 500px){
-font-size: 1.2rem;
-}
 `;
 
 
@@ -232,10 +134,12 @@ const Company = (props) => {
     const [maxDate, setMaxDate] = useState(null);
     const [showIncomes, setShowIncomes] = useState(false);
     const [canDisplayIncome, setCanDisplayIncome] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     const info = props.location.state.info.split(".");
 
     useEffect(() => {
+        setIsLoading(true);
         axios.get(`https://recruitment.hal.skygate.io/incomes/${info[0]}`)
             .then(response => {
                 const sortedIncomes = response.data.incomes.sort((a, b) => Date.parse(a.date) - Date.parse(b.date))
@@ -260,9 +164,9 @@ const Company = (props) => {
                         lastMonthIncome += parseFloat(el.value);
                     })
                 setLastMonthIncome(lastMonthIncome)
+                setIsLoading(false);
             })
     }, []);
-//todo: fix error when range is 0
     const averageIncome = incomeSum / incomes.length;
     const setRange = () => {
         let sum = 0;
@@ -272,7 +176,7 @@ const Company = (props) => {
                 return income;
             }
         })
-        if(rangedIncomes.length>0){
+        if (rangedIncomes.length > 0) {
             setCanDisplayIncome(true);
             console.log(rangedIncomes)
             setIncomeSum(sum);
@@ -286,7 +190,7 @@ const Company = (props) => {
                     lastMonthIncome += parseFloat(el.value);
                 })
             setLastMonthIncome(lastMonthIncome);
-        }else{
+        } else {
             setCanDisplayIncome(false);
         }
 
@@ -295,68 +199,51 @@ const Company = (props) => {
     const incomesList = (
         canDisplayIncome ?
             (
-                <CompanyContent>
-                    <CompanyContentHeader>
-                        Total income:
-                        <span>{incomeSum.toFixed(2)}</span>
-                    </CompanyContentHeader>
-                    <CompanyContentHeader>
-                        Average income:
-                        <span>{averageIncome.toFixed(2)}</span>
-                    </CompanyContentHeader>
-                    <CompanyContentHeader>
-                        Last month income:
-                        <span>{lastMonthIncome.toFixed(2)}</span>
-                    </CompanyContentHeader>
-                    <IncomeContainer>
-                        <IncomeContainerHeading>
-                            <IncomeContainerHeadingContent>Incomes</IncomeContainerHeadingContent>
-                            <Button isBlue onClick={()=>setShowIncomes(!showIncomes)}>
-                                {showIncomes ? 'Hide incomes' : 'Show incomes'}
-                            </Button>
-                        </IncomeContainerHeading>
-
-                        <IncomeContainerContent show={showIncomes}>
-                            {incomes.map(income => (
-                                <Income key={income.date.toString()+income.value.toString()}>
-                                    <IncomeDate>Date: {income.date.toString().slice(0,10)}</IncomeDate>
-                                    <IncomeValue>Value: {income.value}</IncomeValue>
-                                </Income>
-                            ))}
-                        </IncomeContainerContent>
-
-                    </IncomeContainer>
-                </CompanyContent>
+                <CompanyContent
+                    incomeSum={incomeSum}
+                    averageIncome={averageIncome}
+                    lastMonthIncome={lastMonthIncome}
+                    setShowIncomes={setShowIncomes}
+                    showIncomes={showIncomes}
+                    incomes={incomes}
+                />
             )
-            :<EmptyMessage>There is no income during this period</EmptyMessage>
+            : <EmptyMessage>There is no income during this period</EmptyMessage>
 
 
     );
 
+    const companyInfo = (
+        <CompanyInfo>
+            <RangeContent>
+                <MinDate type="date" onChange={e => setMinDate(e.target.value)}/>
+                <MaxDate type="date" onChange={e => setMaxDate(e.target.value)}/>
+                <Button
+                    isBlue
+                    disabled={
+                        (maxDate === null || minDate === null) || (maxDate === null && minDate === null) ? true : false
+                    }
+                    onClick={setRange}>Set range</Button>
+            </RangeContent>
+            {incomesList}
+        </CompanyInfo>
+    )
 
     return (
         <CompanyWrapper>
-            <Button isBlue onClick={()=>props.history.push('/')}>Back to list</Button>
+            <Button isBlue onClick={() => props.history.push('/')}>Back to list</Button>
             <CompanyWrapperHeading>
-
                 <CompanyWrapperHeadingItem>{info[0]}</CompanyWrapperHeadingItem>
                 <CompanyWrapperHeadingItem>{info[1]}</CompanyWrapperHeadingItem>
                 <CompanyWrapperHeadingItem>{info[2]}</CompanyWrapperHeadingItem>
             </CompanyWrapperHeading>
-            <CompanyInfo>
-                <RangeContent>
-                    <MinDate type="date" onChange={e => setMinDate(e.target.value)}/>
-                    <MaxDate type="date" onChange={e => setMaxDate(e.target.value)}/>
-                    <Button
-                        isBlue
-                        disabled={
-                            (maxDate=== null || minDate=== null) || (maxDate===null && minDate===null)   ? true : false
-                        }
-                        onClick={setRange}>Set range</Button>
-                </RangeContent>
-                {incomesList}
-
-            </CompanyInfo>
+            {
+                isLoading ? (
+                    <LoadingAnimationWrapper>
+                        <LoadingAnimation/>
+                    </LoadingAnimationWrapper>
+                ) : companyInfo
+            }
 
         </CompanyWrapper>
     )
