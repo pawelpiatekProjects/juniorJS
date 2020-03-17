@@ -219,7 +219,7 @@ const Company = (props) => {
             {
                 isLoading ? (
                     <LoadingAnimationWrapper>
-                        <LoadingAnimation/>
+                        <LoadingAnimation />
                     </LoadingAnimationWrapper>
                 ) : companyInfo
             }

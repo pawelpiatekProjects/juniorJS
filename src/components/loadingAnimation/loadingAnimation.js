@@ -15,8 +15,8 @@ const spinnerAnimation = keyframes`
 const SpinnerWrapper = styled.div`
 display: inline-block;
   position: relative;
-  width: 15rem;
-  height: 15rem;
+  width: ${props=>props.isBig ? '15rem' : '2rem'};
+  height: ${props=>props.isBig ? '15rem' : '2rem'};
 `;
 
 const SpinnerWrapperChild = styled.div`
@@ -24,13 +24,13 @@ const SpinnerWrapperChild = styled.div`
   box-sizing: border-box;
   display: block;
   position: absolute;
-  width: 12rem;
-  height: 12rem;
-  margin: .8rem;
-  border: .8rem solid ${colors.primaryBlue};
+  width: ${props=>props.isBig ? '12rem' : '2rem'};
+  height: ${props=>props.isBig ? '12rem' : '2rem'};
+ 
+  border: ${props=>props.isBig ? '.8rem' : '.4rem'} solid ${props=>props.isBig ? colors.primaryBlue : colors.tableBorderGray1};
   border-radius: 50%;
   animation: ${spinnerAnimation} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: ${colors.primaryBlue} transparent transparent transparent;
+  border-color: ${props=>props.isBig ? colors.primaryBlue : colors.tableBorderGray1} transparent transparent transparent;
   
   &:nth-child(1){
     animation-delay: -0.45s;
@@ -45,13 +45,13 @@ const SpinnerWrapperChild = styled.div`
   }
 `;
 
-const LoadingAnimation = () =>(
+const LoadingAnimation = ({isBig}) =>(
     <>
         <SpinnerWrapper>
-            <SpinnerWrapperChild></SpinnerWrapperChild>
-            <SpinnerWrapperChild></SpinnerWrapperChild>
-            <SpinnerWrapperChild></SpinnerWrapperChild>
-            <SpinnerWrapperChild></SpinnerWrapperChild>
+            <SpinnerWrapperChild isBig={isBig}></SpinnerWrapperChild>
+            <SpinnerWrapperChild isBig={isBig}></SpinnerWrapperChild>
+            <SpinnerWrapperChild isBig={isBig}></SpinnerWrapperChild>
+            <SpinnerWrapperChild isBig={isBig}></SpinnerWrapperChild>
         </SpinnerWrapper>
     </>
 );

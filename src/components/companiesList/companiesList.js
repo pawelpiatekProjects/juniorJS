@@ -136,7 +136,7 @@ const CompaniesList = (props) => {
         <>
             {isLoading ? (
                 <LoadingAnimationWrapper>
-                    <LoadingAnimation/>
+                    <LoadingAnimation isBig/>
                 </LoadingAnimationWrapper>
             ): (
                 <CompaniesListWrapper>
