@@ -150,6 +150,7 @@ const CompaniesList = (props) => {
                                 <CompaniesListFirstRowItem><p>Id</p></CompaniesListFirstRowItem>
                                 <CompaniesListFirstRowItem><p>Name</p></CompaniesListFirstRowItem>
                                 <CompaniesListFirstRowItem><p>City</p></CompaniesListFirstRowItem>
+                                <CompaniesListFirstRowItem><p>Income</p></CompaniesListFirstRowItem>
                             </CompaniesListFirstRow>
                         </CompaniesListThead>
                         <CompaniesListTbody>
