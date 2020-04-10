@@ -85,6 +85,7 @@ const CompaniesList = (props) => {
     const [companiesOnPage, setCompaniesOnPage] = useState(20); //how many companies on one page
     const [isLoading, setIsLoading] = useState(false);
 
+
     //hook used to fetch data
     useEffect(() => {
         setIsLoading(true);
