@@ -86,18 +86,35 @@ const CompaniesList = (props) => {
     const [isLoading, setIsLoading] = useState(false);
 
 
+
+
     //hook used to fetch data
     useEffect(() => {
         setIsLoading(true);
         axios.get('https://recruitment.hal.skygate.io/companies')
             .then(response => {
-                const sorted = response.data.sort((a, b) => b.id - a.id)
+                const sorted = response.data.sort((a, b) => a.id - b.id)
 
                 return sorted;
             })
             .then(response => {
                 setCompaniesList(response)
                 setIsLoading(false);
+                let incomesArray =[];
+                response.map(company => {
+                    // console.log(company)
+
+                    axios.get(`https://recruitment.hal.skygate.io/incomes/${company.id}`)
+                        .then(response => {
+                        // console.log(response.data)
+                                incomesArray.push(response.data);
+                    })
+                })
+
+                return incomesArray;
+            })
+            .then(incomesArr =>{
+                console.log(incomesArr)
             })
     }, [])
 
@@ -131,17 +148,7 @@ const CompaniesList = (props) => {
         }
     };
 
-    // Method which is called after clicking on selected company.
-    const getCompanyData = (id, name, city) => {
-        const info = `${id}.${name}.${city}`.toString();
-        props.history.push({
-            pathname: `/company/${id}`,
-            state: {
-                info: info // data about selected company are passed as one string. In company component
-                           // info is slicing and displaying
-            }
-        })
-    }
+
     return (
         <>
             {isLoading ? (
@@ -160,7 +167,9 @@ const CompaniesList = (props) => {
                                 <CompaniesListFirstRowItem><p>Id</p></CompaniesListFirstRowItem>
                                 <CompaniesListFirstRowItem><p>Name</p></CompaniesListFirstRowItem>
                                 <CompaniesListFirstRowItem><p>City</p></CompaniesListFirstRowItem>
-                                <CompaniesListFirstRowItem><p>Income</p></CompaniesListFirstRowItem>
+                                <CompaniesListFirstRowItem><p>Total income</p></CompaniesListFirstRowItem>
+                                <CompaniesListFirstRowItem><p>Average income</p></CompaniesListFirstRowItem>
+                                <CompaniesListFirstRowItem><p>Last month income</p></CompaniesListFirstRowItem>
                             </CompaniesListFirstRow>
                         </CompaniesListThead>
                         <CompaniesListTbody>
@@ -170,7 +179,6 @@ const CompaniesList = (props) => {
                                 .map(company => {
                                         return (
                                             <CompanyPreview
-                                                click={getCompanyData}
                                                 key={company.id}
                                                 name={company.name}
                                                 city={company.city}
