@@ -30,12 +30,7 @@ font-size: 1.2rem;
 
 //End of styled components variables
 
-
-
 const CompanyPreview = ({name, city,id, totalIncome, averageIncome, lastMonthIncome}) => {
-
-
-
 
     return(
             <CompanyPreviewWrapper>

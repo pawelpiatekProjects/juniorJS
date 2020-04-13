@@ -40,11 +40,12 @@ height: 100%;
 const CompaniesListFirstRowItem = styled.th`
 p{
 color: ${colors.white};
+font-size: 1.6rem;
 }
 
 @media(max-width: 650px){
 p{
-font-size: 1.4rem;
+font-size: 1.2rem;
 }
 }
 `;
@@ -53,6 +54,7 @@ const ClickableRowItem = styled.th`
 
 p{
 color: ${colors.white};
+font-size: 1.6rem;
 }
 
 &:hover{
@@ -62,7 +64,7 @@ background-color: ${colors.primaryBlueHover};
 
 @media(max-width: 650px){
 p{
-font-size: 1.4rem;
+font-size: 1.2rem;
 }
 }
 
@@ -79,6 +81,7 @@ width: 50%;
 
 @media(max-width: 450px){
 width: 100%;
+margin: 0 auto;
 }
 `;
 

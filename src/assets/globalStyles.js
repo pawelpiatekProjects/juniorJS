@@ -18,6 +18,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
+  width: 100%;
     margin: 0;
     padding: 8rem 6.5rem;
     font-family: 'Montserrat';
@@ -27,7 +28,7 @@ const GlobalStyle = createGlobalStyle`
     }
     
     @media(max-width: 500px){
-    padding: 4rem .5rem;
+    padding: 4rem 0;
     }
   }
 
