@@ -8,34 +8,34 @@ import LoadingAnimation from "../loadingAnimation/loadingAnimation";
 
 //styled components variables
 const CompaniesListWrapper = styled.div`
-width: 80%;
-margin: 1rem auto;
-
-@media(max-width: 1400px){
-width: 90%;
-}
-
-@media(max-width: 1300px){
-width: 95%;
-}
-
-@media(max-width: 800px){
-width: 100%;
-}
+    width: 80%;
+    margin: 1rem auto;
+    
+        @media(max-width: 1400px){
+            width: 90%;
+        }
+        
+        @media(max-width: 1300px){
+            width: 95%;
+        }
+        
+        @media(max-width: 800px){
+            width: 100%;
+        }
 
 `;
 
 const CompaniesListTable = styled.table`
-width: 100%;
-margin: 1rem auto;
-border: 1px solid ${colors.tableBorderGray1};
-border-spacing: 0;
-overflow-y: scroll;
+    width: 100%;
+    margin: 1rem auto;
+    border: 1px solid ${colors.tableBorderGray1};
+    border-spacing: 0;
+    overflow-y: scroll;
 `;
 
 const CompaniesListThead = styled.thead`
-border-bottom: 3px solid ${colors.tableBorderGray1};
-background-color: ${colors.primaryBlue};
+    border-bottom: 3px solid ${colors.tableBorderGray1};
+    background-color: ${colors.primaryBlue};
 
 `;
 
@@ -44,95 +44,95 @@ const CompaniesListTbody = styled.tbody`
 `;
 
 const CompaniesListFirstRow = styled.tr`
-height: 100%;
+    height: 100%;
 `;
 
 const CompaniesListFirstRowItem = styled.th`
 
-p{
-color: ${colors.white};
-font-size: 1.6rem;
-}
-
-@media(max-width: 950px){
-p{
-font-size: 1.4rem;
-}
-}
-
-@media(max-width: 600px){
-p{
-font-size: 1.2rem;
-}
-}
-
-@media(max-width: 450px){
-p{
-font-size: 1rem;
-}
-}
+    p{
+        color: ${colors.white};
+        font-size: 1.6rem;
+    }
+    
+    @media(max-width: 950px){
+        p{
+            font-size: 1.4rem;
+        }
+    }
+    
+    @media(max-width: 600px){
+        p{
+            font-size: 1.2rem;
+        }
+    }
+    
+    @media(max-width: 450px){
+        p{
+            font-size: 1rem;
+        }
+    }
 
 
 `;
 
 const ClickableRowItem = styled.th`
 
-padding: .5rem;
-p{
-color: ${colors.white};
-font-size: 1.6rem;
-}
-
-@media(max-width: 950px){
-p{
-font-size: 1.4rem;
-}
-}
-
-@media(max-width: 600px){
-p{
-font-size: 1.2rem;
-}
-}
-
-@media(max-width: 450px){
-p{
-font-size: 1rem;
-}
-}
-
-&:hover{
-cursor: pointer;
-background-color: ${colors.primaryBlueHover};
-}
+    padding: .5rem;
+        p{
+            color: ${colors.white};
+            font-size: 1.6rem;
+        }
+    
+        @media(max-width: 950px){
+            p{
+                font-size: 1.4rem;
+            }
+        }
+    
+        @media(max-width: 600px){
+            p{
+                font-size: 1.2rem;
+            }
+        }
+    
+        @media(max-width: 450px){
+            p{
+                font-size: 1rem;
+            }
+        }
+    
+        &:hover{
+            cursor: pointer;
+            background-color: ${colors.primaryBlueHover};
+        }
 
 
 `
 
 const CompaniesFilterInput = styled.input`
-border: 1px solid ${colors.inputColor};
-padding: .5rem;
-width: 30%;
-
-@media(max-width: 600px){
-width: 50%;
-font-size: 1.4rem;
-}
-
-@media(max-width: 450px){
-width: 60%;
-margin: 0 auto;
-font-size: 1.2rem;
-display: block;
-}
-
+    border: 1px solid ${colors.inputColor};
+    padding: .5rem;
+    width: 30%;
+    
+    @media(max-width: 600px){
+        width: 50%;
+        font-size: 1.4rem;
+    }
+    
+    @media(max-width: 450px){
+        width: 60%;
+        margin: 0 auto;
+        font-size: 1.2rem;
+        display: block;
+    }
+    
 
 `;
 
 const LoadingAnimationWrapper = styled.div`
-width: 50%;
-margin: 5rem auto;
-text-align: center;
+    width: 50%;
+    margin: 5rem auto;
+    text-align: center;
 `;
 //End of styled components variables
 

@@ -5,27 +5,28 @@ import * as colors from '../../../assets/colors';
 
 //styled components variables
 const CompanyPreviewWrapper = styled.tr`
-&:hover{
-background-color: ${colors.tableBorderGray2};
-}
+    &:hover{
+        background-color: ${colors.tableBorderGray2};
+    }
 `;
 const Row = styled.td`
-padding: 1rem;
-`
+    padding: 1rem;
+`;
+
 const CompanyPreviewText = styled.p`
-text-align: center;
-
-@media(max-width: 950px){
-font-size: 1.4rem;
-}
-
-@media(max-width: 600px){
-font-size: 1.2rem;
-}
-
-@media(max-width: 450px){
-font-size: 1rem;
-}
+    text-align: center;
+    
+    @media(max-width: 950px){
+        font-size: 1.4rem;
+    }
+    
+    @media(max-width: 600px){
+        font-size: 1.2rem;
+    }
+    
+    @media(max-width: 450px){
+        font-size: 1rem;
+    }
 
 `;
 
