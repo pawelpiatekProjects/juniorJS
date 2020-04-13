@@ -36,7 +36,7 @@ const SpinnerWrapper = styled.div`
 
 
 
-const CompanyPreview = ({name, city,id, click}) => {
+const CompanyPreview = ({name, city,id, totalIncome, averageIncome}) => {
 
     //hooks used to manage state in this component
     const [incomesSum, setIncomesSum] = useState(0); //total income
@@ -77,7 +77,7 @@ const CompanyPreview = ({name, city,id, click}) => {
             })
     },[])
 
-    const averageIncome = incomesSum/incomesLength;
+    // const averageIncome = incomesSum/incomesLength;
 
     return(
             <CompanyPreviewWrapper>
@@ -92,7 +92,7 @@ const CompanyPreview = ({name, city,id, click}) => {
                 </Row>
                 <Row>
                     <SpinnerWrapper>
-                        {isLoading ? <LoadingAnimation isBig={false}/> :<CompanyPreviewText>{incomesSum.toFixed(2)}</CompanyPreviewText>}
+                        {isLoading ? <LoadingAnimation isBig={false}/> :<CompanyPreviewText>{totalIncome.toFixed(2)}</CompanyPreviewText>}
                     </SpinnerWrapper>
                 </Row>
                 <Row>

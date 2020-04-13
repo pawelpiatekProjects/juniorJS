@@ -55,6 +55,25 @@ font-size: 1.4rem;
 }
 `;
 
+const ClickableRowItem = styled.th`
+
+p{
+color: ${colors.white};
+}
+
+&:hover{
+cursor: pointer;
+background-color: ${colors.primaryBlueHover};
+}
+
+@media(max-width: 650px){
+p{
+font-size: 1.4rem;
+}
+}
+
+`
+
 const CompaniesFilterInput = styled.input`
 border: 1px solid ${colors.inputColor};
 padding: .5rem;
@@ -84,6 +103,18 @@ const CompaniesList = (props) => {
     const [currentCompaniesPage, setCurrentCompaniesPage] = useState(1); //which page of table is being displayed
     const [companiesOnPage, setCompaniesOnPage] = useState(20); //how many companies on one page
     const [isLoading, setIsLoading] = useState(false);
+    const [isTotalIncomeSortedAscending, setIsTotalIncomeSortedAscending] = useState(false);
+    const [isAverageIncomeSortedAscending, setIsAverageIncomeSortedAscending] = useState(false);
+
+    //Api Url
+    const companiesListUrl = `https://recruitment.hal.skygate.io/companies`;
+    const companyIncomeUrl = `https://recruitment.hal.skygate.io/incomes/`;
+
+    // Variables used to calculate how many companies will be displayed on one page in the table
+    const lastCompany = currentCompaniesPage * companiesOnPage;
+    const firstCompany = lastCompany - companiesOnPage;
+    const currentPage = companiesList.slice(firstCompany, lastCompany);
+    const lastPage = companiesList.length / companiesOnPage;
 
 
 
@@ -91,31 +122,37 @@ const CompaniesList = (props) => {
     //hook used to fetch data
     useEffect(() => {
         setIsLoading(true);
-        axios.get('https://recruitment.hal.skygate.io/companies')
-            .then(response => {
-                const sorted = response.data.sort((a, b) => a.id - b.id)
+        async function fetchAllCompanies(){
+            const {data} = await axios.get(companiesListUrl);
 
-                return sorted;
+            const companiesWithIncomes = data.map(async company =>{
+                const {data} = await axios.get(`${companyIncomeUrl}${company.id}`);
+                const sortedIncomes = data.incomes.sort((a,b)=> Date.parse(a.date) - Date.parse(b.date));
+                let totalIncome = 0;
+                //todo: add last month income
+
+                sortedIncomes.map(income=>{
+                    totalIncome += parseInt(income.value);
+                });
+
+                const averageIncome = totalIncome/sortedIncomes.length;
+
+                return{
+                    ...company,
+                    incomes: sortedIncomes,
+                    totalIncome: totalIncome,
+                    averageIncome: averageIncome
+                }
             })
-            .then(response => {
-                setCompaniesList(response)
-                setIsLoading(false);
-                let incomesArray =[];
-                response.map(company => {
-                    // console.log(company)
-
-                    axios.get(`https://recruitment.hal.skygate.io/incomes/${company.id}`)
-                        .then(response => {
-                        // console.log(response.data)
-                                incomesArray.push(response.data);
-                    })
+            Promise.all(companiesWithIncomes)
+                .then(fullCompanyData=>{
+                    setCompaniesList(fullCompanyData);
+                    setIsLoading(false);
                 })
 
-                return incomesArray;
-            })
-            .then(incomesArr =>{
-                console.log(incomesArr)
-            })
+        }
+        fetchAllCompanies();
+
     }, [])
 
     // Method which is used to set value for input
@@ -128,11 +165,42 @@ const CompaniesList = (props) => {
         }
     };
 
-    // Variables used to calculate how many companies will be displayed on one page in the table
-    const lastCompany = currentCompaniesPage * companiesOnPage;
-    const firstCompany = lastCompany - companiesOnPage;
-    const currentPage = companiesList.slice(firstCompany, lastCompany);
-    const lastPage = companiesList.length / companiesOnPage;
+    // Method which is used to sort by total income
+    const sortByTotalIncome = () => {
+        if(isTotalIncomeSortedAscending){
+            const sortedByTotalIncome = [...companiesList].sort((a,b)=>{
+                return parseFloat(b.totalIncome) - parseFloat(a.totalIncome);
+            })
+            setCompaniesList(sortedByTotalIncome);
+        }else{
+            const sortedByTotalIncome = [...companiesList].sort((a,b)=>{
+                return parseFloat(a.totalIncome) - parseFloat(b.totalIncome);
+            })
+            setCompaniesList(sortedByTotalIncome);
+        }
+
+        setIsTotalIncomeSortedAscending(!isTotalIncomeSortedAscending);
+    };
+
+    const sortByAverageIncome = () =>{
+        if(isAverageIncomeSortedAscending){
+            const sortedByAverageIncome = [...companiesList].sort((a,b)=>{
+                return parseFloat(b.averageIncome) - parseFloat(a.averageIncome);
+            })
+            setCompaniesList(sortedByAverageIncome);
+        }else{
+            const sortedByAverageIncome = [...companiesList].sort((a,b)=>{
+                return parseFloat(a.averageIncome) - parseFloat(b.averageIncome);
+            })
+            setCompaniesList(sortedByAverageIncome);
+        }
+
+        setIsAverageIncomeSortedAscending(!isAverageIncomeSortedAscending);
+    };
+
+
+
+
 
     // Method which is used to navigate to the next page in the table
     const toNextPage = () => {
@@ -167,8 +235,8 @@ const CompaniesList = (props) => {
                                 <CompaniesListFirstRowItem><p>Id</p></CompaniesListFirstRowItem>
                                 <CompaniesListFirstRowItem><p>Name</p></CompaniesListFirstRowItem>
                                 <CompaniesListFirstRowItem><p>City</p></CompaniesListFirstRowItem>
-                                <CompaniesListFirstRowItem><p>Total income</p></CompaniesListFirstRowItem>
-                                <CompaniesListFirstRowItem><p>Average income</p></CompaniesListFirstRowItem>
+                                <ClickableRowItem><p onClick={sortByTotalIncome}>Total income</p></ClickableRowItem>
+                                <ClickableRowItem><p onClick={sortByAverageIncome}>Average income</p></ClickableRowItem>
                                 <CompaniesListFirstRowItem><p>Last month income</p></CompaniesListFirstRowItem>
                             </CompaniesListFirstRow>
                         </CompaniesListThead>
@@ -179,6 +247,8 @@ const CompaniesList = (props) => {
                                 .map(company => {
                                         return (
                                             <CompanyPreview
+                                                totalIncome={company.totalIncome}
+                                                averageIncome={company.averageIncome}
                                                 key={company.id}
                                                 name={company.name}
                                                 city={company.city}
