@@ -99,6 +99,7 @@ const CompaniesList = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isTotalIncomeSortedAscending, setIsTotalIncomeSortedAscending] = useState(false);
     const [isAverageIncomeSortedAscending, setIsAverageIncomeSortedAscending] = useState(false);
+    const [isLastMonthIncomeSortedAscending, setIsLastMonthIncomeSortedAscending] = useState(false);
 
     //Api Url
     const companiesListUrl = `https://recruitment.hal.skygate.io/companies`;
@@ -128,7 +129,6 @@ const CompaniesList = (props) => {
                 const lastMonth = sortedIncomes[sortedIncomes.length-1].date.slice(0,7);
                 sortedIncomes
                     .map(income=>{
-                    // console.log(income)
                     totalIncome += parseFloat(income.value);
                 })
                     const lastMonthIncomes = [...sortedIncomes]
@@ -136,20 +136,9 @@ const CompaniesList = (props) => {
                             income.date.slice(0,7) === lastMonth
                         ))
                         .map(filtered =>{
-                            // console.log(filtered)
                             lastMonthIncome+= parseFloat(filtered.value);
                         })
 
-                        // .map(el=>{
-                        //     const date = el.date.slice(0,7)
-                        //
-                        //     console.log(date === lastMonth)
-                        // })
-                    // .filter(month=>{
-                    //     month.date.slice(0,7).toString() === lastMonth
-                    // });
-                // console.log("--------------")
-                // console.log(lastMonthIncomes)
 
                 const averageIncome = totalIncome/sortedIncomes.length;
 
@@ -215,6 +204,22 @@ const CompaniesList = (props) => {
         setIsAverageIncomeSortedAscending(!isAverageIncomeSortedAscending);
     };
 
+    const sortByLastMonthIncome = () =>{
+        if(isLastMonthIncomeSortedAscending){
+            const sortedByLastMonthIncome = [...companiesList].sort((a,b)=>{
+                return parseFloat(b.lastMonthIncome) - parseFloat(a.lastMonthIncome);
+            })
+            setCompaniesList(sortedByLastMonthIncome);
+        }else{
+            const sortedByLastMonthIncome = [...companiesList].sort((a,b)=>{
+                return parseFloat(a.lastMonthIncome) - parseFloat(b.lastMonthIncome);
+            })
+            setCompaniesList(sortedByLastMonthIncome);
+        }
+
+        setIsLastMonthIncomeSortedAscending(!isLastMonthIncomeSortedAscending);
+    }
+
 
 
 
@@ -254,7 +259,7 @@ const CompaniesList = (props) => {
                                 <CompaniesListFirstRowItem><p>City</p></CompaniesListFirstRowItem>
                                 <ClickableRowItem><p onClick={sortByTotalIncome}>Total income</p></ClickableRowItem>
                                 <ClickableRowItem><p onClick={sortByAverageIncome}>Average income</p></ClickableRowItem>
-                                <CompaniesListFirstRowItem><p>Last month income</p></CompaniesListFirstRowItem>
+                                <ClickableRowItem><p onClick={sortByLastMonthIncome}>Last month income</p></ClickableRowItem>
                             </CompaniesListFirstRow>
                         </CompaniesListThead>
                         <CompaniesListTbody>
