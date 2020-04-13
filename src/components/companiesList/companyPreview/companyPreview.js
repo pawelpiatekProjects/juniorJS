@@ -15,17 +15,18 @@ padding: 1rem;
 const CompanyPreviewText = styled.p`
 text-align: center;
 
-@media(max-width: 650px){
-
+@media(max-width: 950px){
 font-size: 1.4rem;
+}
 
+@media(max-width: 600px){
+font-size: 1.2rem;
 }
 
 @media(max-width: 450px){
-
-font-size: 1.2rem;
-
+font-size: 1rem;
 }
+
 `;
 
 //End of styled components variables

@@ -6,9 +6,17 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     font-size: 62.5%; //1rem = 10px
     
-    @media(max-width: 700px){
-    font-size: 56.25%;
-    }
+   @media(max-width: 1200px){
+   font-size: 56.25%;
+   }
+   
+   @media(max-width: 550px){
+   font-size: 50%;
+   }
+   
+   @media(max-width: 400px){
+   font-size: 45%;
+   }
   }
 
   *,
@@ -23,13 +31,17 @@ const GlobalStyle = createGlobalStyle`
     padding: 8rem 6.5rem;
     font-family: 'Montserrat';
     
-    @media(max-width: 700px){
-    padding: 4rem 3rem;
+    @media(max-width: 800px){
+    padding: 4rem 2rem;
     }
     
-    @media(max-width: 500px){
-    padding: 4rem 0;
+    @media(max-width: 550px){
+    padding: 4rem .5rem;
     }
+    
+    
+    
+  
   }
 
   button {

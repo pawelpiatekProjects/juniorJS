@@ -11,9 +11,18 @@ const CompaniesListWrapper = styled.div`
 width: 80%;
 margin: 1rem auto;
 
+@media(max-width: 1400px){
+width: 90%;
+}
+
+@media(max-width: 1300px){
+width: 95%;
+}
+
 @media(max-width: 800px){
 width: 100%;
 }
+
 `;
 
 const CompaniesListTable = styled.table`
@@ -21,6 +30,7 @@ width: 100%;
 margin: 1rem auto;
 border: 1px solid ${colors.tableBorderGray1};
 border-spacing: 0;
+overflow-y: scroll;
 `;
 
 const CompaniesListThead = styled.thead`
@@ -38,23 +48,57 @@ height: 100%;
 `;
 
 const CompaniesListFirstRowItem = styled.th`
+
 p{
 color: ${colors.white};
 font-size: 1.6rem;
 }
 
-@media(max-width: 650px){
+@media(max-width: 950px){
+p{
+font-size: 1.4rem;
+}
+}
+
+@media(max-width: 600px){
 p{
 font-size: 1.2rem;
 }
 }
+
+@media(max-width: 450px){
+p{
+font-size: 1rem;
+}
+}
+
+
 `;
 
 const ClickableRowItem = styled.th`
 
+padding: .5rem;
 p{
 color: ${colors.white};
 font-size: 1.6rem;
+}
+
+@media(max-width: 950px){
+p{
+font-size: 1.4rem;
+}
+}
+
+@media(max-width: 600px){
+p{
+font-size: 1.2rem;
+}
+}
+
+@media(max-width: 450px){
+p{
+font-size: 1rem;
+}
 }
 
 &:hover{
@@ -62,11 +106,6 @@ cursor: pointer;
 background-color: ${colors.primaryBlueHover};
 }
 
-@media(max-width: 650px){
-p{
-font-size: 1.2rem;
-}
-}
 
 `
 
@@ -75,14 +114,19 @@ border: 1px solid ${colors.inputColor};
 padding: .5rem;
 width: 30%;
 
-@media(max-width: 650px){
+@media(max-width: 600px){
 width: 50%;
+font-size: 1.4rem;
 }
 
 @media(max-width: 450px){
-width: 100%;
+width: 60%;
 margin: 0 auto;
+font-size: 1.2rem;
+display: block;
 }
+
+
 `;
 
 const LoadingAnimationWrapper = styled.div`
@@ -257,12 +301,12 @@ const CompaniesList = (props) => {
                     <CompaniesListTable>
                         <CompaniesListThead>
                             <CompaniesListFirstRow>
-                                <CompaniesListFirstRowItem><p>Id</p></CompaniesListFirstRowItem>
-                                <CompaniesListFirstRowItem><p>Name</p></CompaniesListFirstRowItem>
-                                <CompaniesListFirstRowItem><p>City</p></CompaniesListFirstRowItem>
-                                <ClickableRowItem><p onClick={sortByTotalIncome}>Total income</p></ClickableRowItem>
-                                <ClickableRowItem><p onClick={sortByAverageIncome}>Average income</p></ClickableRowItem>
-                                <ClickableRowItem><p onClick={sortByLastMonthIncome}>Last month income</p></ClickableRowItem>
+                                <CompaniesListFirstRowItem ><p>Id</p></CompaniesListFirstRowItem>
+                                <CompaniesListFirstRowItem ><p>Name</p></CompaniesListFirstRowItem>
+                                <CompaniesListFirstRowItem ><p>City</p></CompaniesListFirstRowItem>
+                                <ClickableRowItem ><p onClick={sortByTotalIncome}>Total income</p></ClickableRowItem>
+                                <ClickableRowItem ><p onClick={sortByAverageIncome}>Average income</p></ClickableRowItem>
+                                <ClickableRowItem ><p onClick={sortByLastMonthIncome}>Last month income</p></ClickableRowItem>
                             </CompaniesListFirstRow>
                         </CompaniesListThead>
                         <CompaniesListTbody>
