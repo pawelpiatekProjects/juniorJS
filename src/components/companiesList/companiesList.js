@@ -8,15 +8,9 @@ import LoadingAnimation from "../loadingAnimation/loadingAnimation";
 
 //styled components variables
 const CompaniesListWrapper = styled.div`
-width: 50%;
-margin: 1rem auto;
-@media(max-width: 1400px){
-width: 70%;
-}
-
-@media(max-width: 1000px){
 width: 80%;
-}
+margin: 1rem auto;
+
 @media(max-width: 800px){
 width: 100%;
 }
@@ -129,11 +123,33 @@ const CompaniesList = (props) => {
                 const {data} = await axios.get(`${companyIncomeUrl}${company.id}`);
                 const sortedIncomes = data.incomes.sort((a,b)=> Date.parse(a.date) - Date.parse(b.date));
                 let totalIncome = 0;
+                let lastMonthIncome = 0;
                 //todo: add last month income
+                const lastMonth = sortedIncomes[sortedIncomes.length-1].date.slice(0,7);
+                sortedIncomes
+                    .map(income=>{
+                    // console.log(income)
+                    totalIncome += parseFloat(income.value);
+                })
+                    const lastMonthIncomes = [...sortedIncomes]
+                        .filter(income=>(
+                            income.date.slice(0,7) === lastMonth
+                        ))
+                        .map(filtered =>{
+                            // console.log(filtered)
+                            lastMonthIncome+= parseFloat(filtered.value);
+                        })
 
-                sortedIncomes.map(income=>{
-                    totalIncome += parseInt(income.value);
-                });
+                        // .map(el=>{
+                        //     const date = el.date.slice(0,7)
+                        //
+                        //     console.log(date === lastMonth)
+                        // })
+                    // .filter(month=>{
+                    //     month.date.slice(0,7).toString() === lastMonth
+                    // });
+                // console.log("--------------")
+                // console.log(lastMonthIncomes)
 
                 const averageIncome = totalIncome/sortedIncomes.length;
 
@@ -141,7 +157,8 @@ const CompaniesList = (props) => {
                     ...company,
                     incomes: sortedIncomes,
                     totalIncome: totalIncome,
-                    averageIncome: averageIncome
+                    averageIncome: averageIncome,
+                    lastMonthIncome: lastMonthIncome
                 }
             })
             Promise.all(companiesWithIncomes)
@@ -249,6 +266,7 @@ const CompaniesList = (props) => {
                                             <CompanyPreview
                                                 totalIncome={company.totalIncome}
                                                 averageIncome={company.averageIncome}
+                                                lastMonthIncome ={company.lastMonthIncome}
                                                 key={company.id}
                                                 name={company.name}
                                                 city={company.city}
