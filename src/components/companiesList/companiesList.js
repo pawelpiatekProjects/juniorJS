@@ -136,7 +136,7 @@ const LoadingAnimationWrapper = styled.div`
 `;
 //End of styled components variables
 
-const CompaniesList = (props) => {
+const CompaniesList = () => {
 
     //hooks used to manage state in this component
     const [searchInputValue, setSearchInputValue] = useState('');
@@ -164,7 +164,7 @@ const CompaniesList = (props) => {
     //hook used to fetch data
     useEffect(() => {
         setIsLoading(true);
-        async function fetchAllCompanies(){
+        const fetchAllCompanies = async ()=>{
             const {data} = await axios.get(companiesListUrl);
 
             const companiesWithIncomes = data.map(async company =>{
@@ -172,7 +172,6 @@ const CompaniesList = (props) => {
                 const sortedIncomes = data.incomes.sort((a,b)=> Date.parse(a.date) - Date.parse(b.date));
                 let totalIncome = 0;
                 let lastMonthIncome = 0;
-                //todo: add last month income
                 const lastMonth = sortedIncomes[sortedIncomes.length-1].date.slice(0,7);
                 sortedIncomes
                     .map(income=>{

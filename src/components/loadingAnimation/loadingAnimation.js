@@ -14,10 +14,11 @@ const spinnerAnimation = keyframes`
 
 
 const SpinnerWrapper = styled.div`
-display: inline-block;
+  margin: 0 auto;
+  display: inline-block;
   position: relative;
-  width: ${props=>props.isBig ? '15rem' : '2rem'};
-  height: ${props=>props.isBig ? '15rem' : '2rem'};
+  width: ${props=>props.isBig ? '2rem' : '15rem'};
+  height: ${props=>props.isBig ? '2rem' : '15rem'};
 `;
 
 const SpinnerWrapperChild = styled.div`
