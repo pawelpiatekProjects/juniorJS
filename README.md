@@ -1,11 +1,12 @@
 <!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
 
-<h1 align="center">
+<h2 align="center">
   Skygate Junior JS DEveloper task
-</h1>
+</h2>
 
 
-###Demo screenshots
+
+<h4>Demo screenshots</h4>
 ![Image description](./src/assets/images/skygate.PNG)
 
 ![Image description](./src/assets/images/skygate2.PNG)
@@ -15,17 +16,17 @@
 
 ***
 
-### Project description
+<h4>Project description</h4>
 
-This project is a react application. This app uses styled components for styling. 
+This project is a React application. This app uses styled components for styling. 
 For managing state and async actions I used react hooks (useState, useEffect).
-For fetching data from Api I used axios. 
+For fetching data from API I used [axios](https://github.com/axios/axios). 
 
  Application's logic is divided into several files. App.js is a root file. Another 
  components are nested in this component. When we open this app the companies list is presented.
  All data from ["https://recruitment.hal.skygate.io/companies"](https://recruitment.hal.skygate.io/companies)
  are fetched before component is mounted to DOM. After fetching data from `/companies` another axios get request
-  from [https://recruitment.hal.skygate.io/incomes/]("https://recruitment.hal.skygate.io/incomes/") for each company is made.
+  from [https://recruitment.hal.skygate.io/incomes/](https://recruitment.hal.skygate.io/incomes/) for each company is made.
    Data from `/incomes` are spread in companies array from `/companies`.
  
  We can search through the table by company name using input above the table. 
@@ -43,12 +44,12 @@ For fetching data from Api I used axios.
 
 
 ***
-###Technologies
-1. ReactJS
-1. Styled Components
+<h4>Technologies</h4>
+1. [ReactJS](https://pl.reactjs.org/)
+1. [Styled Components](https://styled-components.com/)
 
 ***
-###Opening project
+<h4>Develop project</h4>
 
 
 1.  **Start developing.**
@@ -68,7 +69,7 @@ For fetching data from Api I used axios.
     
   ***
 
-###Project structure
+<h4>Project structure</h4>
 
 A quick look at the top-level files and directories you'll see in a Gatsby project.
 
