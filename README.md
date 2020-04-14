@@ -45,8 +45,8 @@ For fetching data from API I used [axios](https://github.com/axios/axios).
 
 ***
 <h4>Technologies</h4>
-1. [ReactJS](https://pl.reactjs.org/)
-1. [Styled Components](https://styled-components.com/)
+1. ReactJS
+1. Styled Components
 
 ***
 <h4>Develop project</h4>
