@@ -7,8 +7,8 @@
 
 
 <h4>Demo screenshots</h4>
-![Image description](./src/assets/images/skygate.PNG)
 
+![Image description](./src/assets/images/skygate.PNG)
 ![Image description](./src/assets/images/skygate2.PNG)
 
 
