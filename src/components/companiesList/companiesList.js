@@ -235,6 +235,7 @@ const CompaniesList = (props) => {
         setIsTotalIncomeSortedAscending(!isTotalIncomeSortedAscending);
     };
 
+    // Method which is used to sort by average income
     const sortByAverageIncome = () =>{
         if(isAverageIncomeSortedAscending){
             const sortedByAverageIncome = [...companiesList].sort((a,b)=>{
@@ -251,6 +252,7 @@ const CompaniesList = (props) => {
         setIsAverageIncomeSortedAscending(!isAverageIncomeSortedAscending);
     };
 
+    // Method which is used to sort by last month income
     const sortByLastMonthIncome = () =>{
         if(isLastMonthIncomeSortedAscending){
             const sortedByLastMonthIncome = [...companiesList].sort((a,b)=>{

@@ -9,6 +9,7 @@ const CompanyPreviewWrapper = styled.tr`
         background-color: ${colors.tableBorderGray2};
     }
 `;
+
 const Row = styled.td`
     padding: 1rem;
 `;
