@@ -1,7 +1,7 @@
 <!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
 
 <h2 align="center">
-  Skygate Junior JS Developer task
+ Junior JS Developer task
 </h2>
 
 
