@@ -1,20 +1,16 @@
 <!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
-<p align="center">
- 
-</p>
+
 <h1 align="center">
-  Skygate internship test task
+  Skygate Junior JS DEveloper task
 </h1>
 
 
 ###Demo screenshots
-![Image description](./src/assets/images/skygate1.PNG)
+![Image description](./src/assets/images/skygate.PNG)
 
-![Image description](./src/assets/images/skyagte2.PNG)
+![Image description](./src/assets/images/skygate2.PNG)
 
-![Image description](./src/assets/images/skygate3.PNG)
 
-![Image description](./src/assets/images/skygate4.PNG)
 
 
 ***
@@ -23,26 +19,26 @@
 
 This project is a react application. This app uses styled components for styling. 
 For managing state and async actions I used react hooks (useState, useEffect).
-For fetching data frm api I used axios. For routing I used react-router. On route **`("/")`**
-we have companiesList component which contains table with all companies. After clicking
-on selected company preview we are redirected to route **`(/company/:id)`**
+For fetching data from Api I used axios. 
 
  Application's logic is divided into several files. App.js is a root file. Another 
- components are nested in this component. When we open this app we starts in route **`("/")`**
- and companiesList component is being displayed. All data from ["https://recruitment.hal.skygate.io/companies"](https://recruitment.hal.skygate.io/companies)
- are fetched before component is mounted to DOM. Data are being stored in an array.
- By default table is paginated and there are 20 companies on each page of the table.
+ components are nested in this component. When we open this app the companies list is presented.
+ All data from ["https://recruitment.hal.skygate.io/companies"](https://recruitment.hal.skygate.io/companies)
+ are fetched before component is mounted to DOM. After fetching data from `/companies` another axios get request
+  from [https://recruitment.hal.skygate.io/incomes/]("https://recruitment.hal.skygate.io/incomes/") for each company is made.
+   Data from `/incomes` are spread in companies array from `/companies`.
+ 
  We can search through the table by company name using input above the table. 
  When we started typing company name the companies list is being filtered.
  
+ App provides sorting by selected criteria. By default companies list isn't sorted. When we 
+ click on selected header (total income, average income, last month income) companies list
+ is sorted and the structure of companies presented in companies list is changing. When we
+ first click on selected header the companies list is sorting ascending by selected criteria.
+ After second click the companies list is sorting descending.
  
- After clicking on selected company we are redirected to **`(/company/:id)`** and 
- data from [https://recruitment.hal.skygate.io/incomes/]("https://recruitment.hal.skygate.io/incomes/")
- are being fetched. At the same time total income, average income and last month income
- are being calculated. We can choose by using date inputs period of time in which we
- want to calculated income. When we click on button "Show incomes" we can see
- a list which contains all incomes in selected period of time. By default app 
- displays all incomes.
+ 
+
  
 
 
@@ -87,10 +83,6 @@ A quick look at the top-level files and directories you'll see in a Gatsby proje
                 ├── companiesList.js
                 ├── companyPreview
                     ├── companyPreview.js
-            ├── company
-                ├── company.js
-                ├── companyContent
-                    ├── companyContent.js
             ├── loadingAnimation
                 ├── loadingAnimation.js
             ├── paginationButtons
@@ -115,26 +107,12 @@ A quick look at the top-level files and directories you'll see in a Gatsby proje
     
    **`companiesList.js`**: This file contains table in which all companies are presented. It also contains all whole logic connected to fetching and managing data from [https://recruitment.hal.skygate.io/companies]("https://recruitment.hal.skygate.io/companies")
     
-    
-
   **`/companyPreview`**: This directory contains **`companyPreview.js`** file.
   
   **`companyPreview.js`**: This file is a react component which is a single row in
-  table from **`companiesList.js`** file. This component presents id, name, city and 
-  total income of selected company. This file contains logic for fetching income from
-  [https://recruitment.hal.skygate.io/incomes/]("https://recruitment.hal.skygate.io/incomes/")
+  table from **`companiesList.js`** file. This component presents id, name, city,
+  total income, average income and last month income of selected company. 
 
-  **`company/`**: This directory contains **`company.js`** file and **`companyContent/`** directory
-
- **`company.js`**: This file contains react component which is displayed after redirecting to company's page.
-      This file contains also logic connected to fetching and calculating incomes.
-      
-  **`/companyContent`**: This directory contains **`companyContent.js`** file
-    
-
-  **`companyContent.js`**: This file contains react component which displays information
-  about total income, average income and last month income. This component displays also 
-  list of incomes in selected time period
 
   **`/loadingAnimation`**: This directory contains **`loadingAnimation.js`** file
 
