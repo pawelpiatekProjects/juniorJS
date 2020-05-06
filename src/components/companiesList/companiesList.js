@@ -85,22 +85,23 @@ const ClickableRowItem = styled.th`
           border: none;
           color: ${colors.white};
           font-size: 1.6rem;
+          
         }
     
         @media(max-width: 950px){
-            p{
+             button{
                 font-size: 1.4rem;
             }
         }
     
         @media(max-width: 600px){
-            p{
+             button{
                 font-size: 1.2rem;
             }
         }
     
         @media(max-width: 450px){
-            p{
+            button{
                 font-size: 1rem;
             }
         }
