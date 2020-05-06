@@ -135,8 +135,11 @@ const CompaniesFilterInput = styled.input`
 `;
 
 const LoadingAnimationWrapper = styled.div`
-    width: 50%;
-    margin: 5rem auto;
+    width: 100%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     text-align: center;
 `;
 //End of styled components variables
@@ -147,8 +150,8 @@ const CompaniesList = () => {
     const [searchInputValue, setSearchInputValue] = useState('');
     const [companiesList, setCompaniesList] = useState([]); //list of displaying companies
 
-    const [sortedTotalandAverageDescending, setSortedTotalandAverageDescending] = useState([]);
-    const [sortedTotalandAverageAscendingg, setSortedTotalandAverageAscendingg] = useState([]);
+    const [sortedTotalAndAverageDescending, setSortedTotalAndAverageDescending] = useState([]);
+    const [sortedTotalAndAverageAscending, setSortedTotalAndAverageAscending] = useState([]);
     const [sortedLastMonthIncomeDescending, setSortedLastMonthIncomeDescending] = useState([]);
     const [sortedLastMonthIncomeAscending, setSortedLastMonthIncomeAscending] = useState([]);
 
@@ -170,7 +173,7 @@ const CompaniesList = () => {
     const lastPage = companiesList.length / companiesOnPage;
 
 //todo fix loader on small devices
-    //todo: dodać że jak jest posortowane po total income to jest też po average income
+
     //hook used to fetch data
     useEffect(() => {
         setIsLoading(true);
@@ -214,12 +217,6 @@ const CompaniesList = () => {
                     const totaAndAveragelAscending = [...fullCompanyData].sort((a, b) => {
                         return parseFloat(a.totalIncome) - parseFloat(b.totalIncome);
                     });
-                    // const averageDescending = [...fullCompanyData].sort((a, b) => {
-                    //     return parseFloat(b.averageIncome) - parseFloat(a.averageIncome);
-                    // });
-                    // const averageAscending = [...fullCompanyData].sort((a, b) => {
-                    //     return parseFloat(a.averageIncome) - parseFloat(b.averageIncome);
-                    // });
                     const lastDescending = [...fullCompanyData].sort((a, b) => {
                         return parseFloat(b.lastMonthIncome) - parseFloat(a.lastMonthIncome);
                     });
@@ -227,8 +224,8 @@ const CompaniesList = () => {
                         return parseFloat(a.lastMonthIncome) - parseFloat(b.lastMonthIncome);
                     });
                     setCompaniesList(fullCompanyData);
-                    setSortedTotalandAverageDescending(totalAndAverageDescending);
-                    setSortedTotalandAverageAscendingg(totaAndAveragelAscending);
+                    setSortedTotalAndAverageDescending(totalAndAverageDescending);
+                    setSortedTotalAndAverageAscending(totaAndAveragelAscending);
                     setSortedLastMonthIncomeDescending(lastDescending);
                     setSortedLastMonthIncomeAscending(lastAscending);
                     setIsLoading(false);
@@ -256,9 +253,9 @@ const CompaniesList = () => {
     const sortTotalAndAverage = () => {
 
         if(isTotalAndAverageIncomeSortedAscending){
-            setCompaniesList(sortedTotalandAverageDescending);
+            setCompaniesList(sortedTotalAndAverageDescending);
         }else{
-            setCompaniesList(sortedTotalandAverageAscendingg);
+            setCompaniesList(sortedTotalAndAverageAscending);
         }
         setIsTotalAndAverageIncomeSortedAscending(!isTotalAndAverageIncomeSortedAscending);
     }
@@ -296,7 +293,7 @@ const CompaniesList = () => {
             {isLoading ? (
                 <LoadingAnimationWrapper>
                     {/*isBig prop is used to change style (size and color) of Loading animation spinner*/}
-                    <LoadingAnimation isBig/>
+                    <LoadingAnimation/>
                 </LoadingAnimationWrapper>
             ) : (
                 <CompaniesListWrapper>
