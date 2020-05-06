@@ -6,6 +6,7 @@
 
 
 
+
 <h4>Demo screenshots</h4>
 
 ![Image description](./src/assets/images/skygate.PNG)
@@ -16,7 +17,12 @@
 
 ***
 
+[Deployed App](https://loving-hopper-72f38f.netlify.app/)
+***
+
 <h4>Project description</h4>
+
+
 
 This project is a React application. This app uses styled components for styling. 
 For managing state and async actions I used react hooks (useState, useEffect).
