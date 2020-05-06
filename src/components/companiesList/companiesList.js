@@ -78,9 +78,13 @@ const CompaniesListFirstRowItem = styled.th`
 const ClickableRowItem = styled.th`
 
     padding: .5rem;
-        p{
-            color: ${colors.white};
-            font-size: 1.6rem;
+        button{
+          height: 100%;
+          padding: 1rem;
+          background-color: ${colors.primaryBlue};
+          border: none;
+          color: ${colors.white};
+          font-size: 1.6rem;
         }
     
         @media(max-width: 950px){
@@ -101,7 +105,7 @@ const ClickableRowItem = styled.th`
             }
         }
     
-        &:hover{
+        &:hover button{
             cursor: pointer;
             background-color: ${colors.primaryBlueHover};
         }
@@ -167,36 +171,34 @@ const CompaniesList = () => {
     const lastPage = companiesList.length / companiesOnPage;
 
 
-
-
     //hook used to fetch data
     useEffect(() => {
         setIsLoading(true);
-        const fetchAllCompanies = async ()=>{
+        const fetchAllCompanies = async () => {
             const {data} = await axios.get(companiesListUrl);
 
-            const companiesWithIncomes = data.map(async company =>{
+            const companiesWithIncomes = data.map(async company => {
                 const {data} = await axios.get(`${companyIncomeUrl}${company.id}`);
-                const sortedIncomes = data.incomes.sort((a,b)=> Date.parse(a.date) - Date.parse(b.date));
+                const sortedIncomes = data.incomes.sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
                 let totalIncome = 0;
                 let lastMonthIncome = 0;
-                const lastMonth = sortedIncomes[sortedIncomes.length-1].date.slice(0,7);
+                const lastMonth = sortedIncomes[sortedIncomes.length - 1].date.slice(0, 7);
                 sortedIncomes
-                    .map(income=>{
-                    totalIncome += parseFloat(income.value);
-                })
-                    const lastMonthIncomes = [...sortedIncomes]
-                        .filter(income=>(
-                            income.date.slice(0,7) === lastMonth
-                        ))
-                        .map(filtered =>{
-                            lastMonthIncome+= parseFloat(filtered.value);
-                        })
+                    .map(income => {
+                        totalIncome += parseFloat(income.value);
+                    })
+                const lastMonthIncomes = [...sortedIncomes]
+                    .filter(income => (
+                        income.date.slice(0, 7) === lastMonth
+                    ))
+                    .map(filtered => {
+                        lastMonthIncome += parseFloat(filtered.value);
+                    })
 
 
-                const averageIncome = totalIncome/sortedIncomes.length;
+                const averageIncome = totalIncome / sortedIncomes.length;
 
-                return{
+                return {
                     ...company,
                     incomes: sortedIncomes,
                     totalIncome: totalIncome,
@@ -205,23 +207,23 @@ const CompaniesList = () => {
                 }
             })
             Promise.all(companiesWithIncomes)
-                .then(fullCompanyData=>{
-                    const totalDescending = [...fullCompanyData].sort((a,b) =>{
+                .then(fullCompanyData => {
+                    const totalDescending = [...fullCompanyData].sort((a, b) => {
                         return parseFloat(b.totalIncome) - parseFloat(a.totalIncome);
                     });
-                    const totalAscending = [...fullCompanyData].sort((a,b)=>{
+                    const totalAscending = [...fullCompanyData].sort((a, b) => {
                         return parseFloat(a.totalIncome) - parseFloat(b.totalIncome);
                     });
-                    const averageDescending =  [...fullCompanyData].sort((a,b)=>{
+                    const averageDescending = [...fullCompanyData].sort((a, b) => {
                         return parseFloat(b.averageIncome) - parseFloat(a.averageIncome);
                     });
-                    const averageAscending = [...fullCompanyData].sort((a,b)=>{
+                    const averageAscending = [...fullCompanyData].sort((a, b) => {
                         return parseFloat(a.averageIncome) - parseFloat(b.averageIncome);
                     });
-                    const lastDescending = [...fullCompanyData].sort((a,b)=>{
+                    const lastDescending = [...fullCompanyData].sort((a, b) => {
                         return parseFloat(b.lastMonthIncome) - parseFloat(a.lastMonthIncome);
                     });
-                    const lastAscending = [...fullCompanyData].sort((a,b)=>{
+                    const lastAscending = [...fullCompanyData].sort((a, b) => {
                         return parseFloat(a.lastMonthIncome) - parseFloat(b.lastMonthIncome);
                     });
                     setCompaniesList(fullCompanyData);
@@ -249,39 +251,32 @@ const CompaniesList = () => {
         }
     };
 
+
+
+
+
+
+
+
+
+
     // Method which is used to sort by total income
-    const sortByTotalIncome = () => {
-        if(isTotalIncomeSortedAscending){
-            setCompaniesList(sortedByTotalAscending);
-        }else{
-            setCompaniesList(sortedByTotalDescending);
-        }
+    const sortTotal = (column) => {
+        setCompaniesList(column);
         setIsTotalIncomeSortedAscending(!isTotalIncomeSortedAscending);
-    };
-
-    // Method which is used to sort by average income
-    const sortByAverageIncome = () =>{
-        if(isAverageIncomeSortedAscending){
-            setCompaniesList(sortedAverageAscending);
-        }else{
-            setCompaniesList(sortedAverageDescending);
-        }
-
-        setIsAverageIncomeSortedAscending(!isAverageIncomeSortedAscending);
-    };
-
-    // Method which is used to sort by last month income
-    const sortByLastMonthIncome = () =>{
-        if(isLastMonthIncomeSortedAscending){
-            setCompaniesList(sortedLastMonthIncomeAscending);
-        }else{
-            setCompaniesList(sortedLastMonthIncomeDescending);
-        }
-        setIsLastMonthIncomeSortedAscending(!isLastMonthIncomeSortedAscending);
     }
 
+    // Method which is used to sort by average income
+    const sortAverage = (column) =>{
+        setCompaniesList(column);
+        setIsAverageIncomeSortedAscending(!isAverageIncomeSortedAscending);
+    }
 
-
+    // Method which is used to sort by last month income
+    const sortLastMonth = (column) =>{
+        setCompaniesList(column);
+        setIsLastMonthIncomeSortedAscending(!isLastMonthIncomeSortedAscending);
+    }
 
 
     // Method which is used to navigate to the next page in the table
@@ -306,7 +301,7 @@ const CompaniesList = () => {
                     {/*isBig prop is used to change style (size and color) of Loading animation spinner*/}
                     <LoadingAnimation isBig/>
                 </LoadingAnimationWrapper>
-            ):(
+            ) : (
                 <CompaniesListWrapper>
                     <CompaniesFilterInput
                         placeholder="Search"
@@ -314,12 +309,28 @@ const CompaniesList = () => {
                     <CompaniesListTable>
                         <CompaniesListThead>
                             <CompaniesListFirstRow>
-                                <CompaniesListFirstRowItem ><p>Id</p></CompaniesListFirstRowItem>
-                                <CompaniesListFirstRowItem ><p>Name</p></CompaniesListFirstRowItem>
-                                <CompaniesListFirstRowItem ><p>City</p></CompaniesListFirstRowItem>
-                                <ClickableRowItem ><p onClick={sortByTotalIncome}>Total income</p></ClickableRowItem>
-                                <ClickableRowItem ><p onClick={sortByAverageIncome}>Average income</p></ClickableRowItem>
-                                <ClickableRowItem ><p onClick={sortByLastMonthIncome}>Last month income</p></ClickableRowItem>
+                                <CompaniesListFirstRowItem><p>Id</p></CompaniesListFirstRowItem>
+                                <CompaniesListFirstRowItem><p>Name</p></CompaniesListFirstRowItem>
+                                <CompaniesListFirstRowItem><p>City</p></CompaniesListFirstRowItem>
+                                <ClickableRowItem>
+                                    {
+                                        isTotalIncomeSortedAscending ?
+                                            <button onClick={() => sortTotal(sortedByTotalDescending)}>Total income</button> :
+                                            <button onClick={() => sortTotal(sortedByTotalAscending)}>Total income</button>
+                                    }
+                                </ClickableRowItem>
+                                <ClickableRowItem>
+                                    {
+                                        isAverageIncomeSortedAscending ?
+                                        <button onClick={() => sortAverage(sortedAverageDescending)}>Average income</button> :
+                                        <button onClick={() => sortAverage(sortedAverageAscending)}>Average income</button>
+                                    }
+                                </ClickableRowItem>
+                                <ClickableRowItem>
+                                    {isLastMonthIncomeSortedAscending ?
+                                        <button onClick={() => sortLastMonth(sortedLastMonthIncomeDescending)}>Last month Income</button> :
+                                        <button onClick={() => sortLastMonth(sortedLastMonthIncomeAscending)}>Last month Income</button>}
+                                </ClickableRowItem>
                             </CompaniesListFirstRow>
                         </CompaniesListThead>
                         <CompaniesListTbody>
@@ -331,7 +342,7 @@ const CompaniesList = () => {
                                             <CompanyPreview
                                                 totalIncome={company.totalIncome}
                                                 averageIncome={company.averageIncome}
-                                                lastMonthIncome ={company.lastMonthIncome}
+                                                lastMonthIncome={company.lastMonthIncome}
                                                 key={company.id}
                                                 name={company.name}
                                                 city={company.city}
