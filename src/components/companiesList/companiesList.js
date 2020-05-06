@@ -85,6 +85,12 @@ const ClickableRowItem = styled.th`
           border: none;
           color: ${colors.white};
           font-size: 1.6rem;
+          outline: none;
+          
+          &:hover{
+          cursor: pointer;
+            color: ${colors.yellow}
+          }
           
         }
     
@@ -106,10 +112,7 @@ const ClickableRowItem = styled.th`
             }
         }
     
-        &:hover button{
-            cursor: pointer;
-            color: ${colors.yellow}
-        }
+        
 
 
 `
@@ -247,26 +250,24 @@ const CompaniesList = () => {
     };
 
 
-
     // Method which is used to sort by total income and average income. I am using one method to both columns,
     // because when we sort total income the average income is also sorted
     const sortTotalAndAverage = () => {
 
-        if(isTotalAndAverageIncomeSortedAscending){
+        if (isTotalAndAverageIncomeSortedAscending) {
             setCompaniesList(sortedTotalAndAverageDescending);
-        }else{
+        } else {
             setCompaniesList(sortedTotalAndAverageAscending);
         }
         setIsTotalAndAverageIncomeSortedAscending(!isTotalAndAverageIncomeSortedAscending);
     }
 
 
-
     // Method which is used to sort by last month income
-    const sortLastMonth = () =>{
-        if(isLastMonthIncomeSortedAscending){
+    const sortLastMonth = () => {
+        if (isLastMonthIncomeSortedAscending) {
             setCompaniesList(sortedLastMonthIncomeDescending)
-        }else{
+        } else {
             setCompaniesList(sortedLastMonthIncomeAscending);
         }
         setIsLastMonthIncomeSortedAscending(!isLastMonthIncomeSortedAscending);
