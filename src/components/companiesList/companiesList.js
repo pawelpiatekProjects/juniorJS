@@ -147,18 +147,16 @@ const CompaniesList = () => {
     const [searchInputValue, setSearchInputValue] = useState('');
     const [companiesList, setCompaniesList] = useState([]); //list of displaying companies
 
-    const [sortedByTotalDescending, setSortedByTotalDescending] = useState([]);
-    const [sortedByTotalAscending, setSortedByTotalAscending] = useState([]);
-    const [sortedAverageDescending, setSortedAverageDescending] = useState([]);
-    const [sortedAverageAscending, setSortedAverageAscending] = useState([]);
+    const [sortedTotalandAverageDescending, setSortedTotalandAverageDescending] = useState([]);
+    const [sortedTotalandAverageAscendingg, setSortedTotalandAverageAscendingg] = useState([]);
     const [sortedLastMonthIncomeDescending, setSortedLastMonthIncomeDescending] = useState([]);
     const [sortedLastMonthIncomeAscending, setSortedLastMonthIncomeAscending] = useState([]);
 
     const [currentCompaniesPage, setCurrentCompaniesPage] = useState(1); //which page of table is being displayed
     const [companiesOnPage, setCompaniesOnPage] = useState(20); //how many companies on one page
     const [isLoading, setIsLoading] = useState(false);
-    const [isTotalIncomeSortedAscending, setIsTotalIncomeSortedAscending] = useState(false);
-    const [isAverageIncomeSortedAscending, setIsAverageIncomeSortedAscending] = useState(false);
+    const [isTotalAndAverageIncomeSortedAscending, setIsTotalAndAverageIncomeSortedAscending] = useState(false);
+    // const [isAverageIncomeSortedAscending, setIsAverageIncomeSortedAscending] = useState(false);
     const [isLastMonthIncomeSortedAscending, setIsLastMonthIncomeSortedAscending] = useState(false);
 
     //Api Url
@@ -171,7 +169,8 @@ const CompaniesList = () => {
     const currentPage = companiesList.slice(firstCompany, lastCompany);
     const lastPage = companiesList.length / companiesOnPage;
 
-
+//todo fix loader on small devices
+    //todo: dodać że jak jest posortowane po total income to jest też po average income
     //hook used to fetch data
     useEffect(() => {
         setIsLoading(true);
@@ -209,18 +208,18 @@ const CompaniesList = () => {
             })
             Promise.all(companiesWithIncomes)
                 .then(fullCompanyData => {
-                    const totalDescending = [...fullCompanyData].sort((a, b) => {
+                    const totalAndAverageDescending = [...fullCompanyData].sort((a, b) => {
                         return parseFloat(b.totalIncome) - parseFloat(a.totalIncome);
                     });
-                    const totalAscending = [...fullCompanyData].sort((a, b) => {
+                    const totaAndAveragelAscending = [...fullCompanyData].sort((a, b) => {
                         return parseFloat(a.totalIncome) - parseFloat(b.totalIncome);
                     });
-                    const averageDescending = [...fullCompanyData].sort((a, b) => {
-                        return parseFloat(b.averageIncome) - parseFloat(a.averageIncome);
-                    });
-                    const averageAscending = [...fullCompanyData].sort((a, b) => {
-                        return parseFloat(a.averageIncome) - parseFloat(b.averageIncome);
-                    });
+                    // const averageDescending = [...fullCompanyData].sort((a, b) => {
+                    //     return parseFloat(b.averageIncome) - parseFloat(a.averageIncome);
+                    // });
+                    // const averageAscending = [...fullCompanyData].sort((a, b) => {
+                    //     return parseFloat(a.averageIncome) - parseFloat(b.averageIncome);
+                    // });
                     const lastDescending = [...fullCompanyData].sort((a, b) => {
                         return parseFloat(b.lastMonthIncome) - parseFloat(a.lastMonthIncome);
                     });
@@ -228,13 +227,11 @@ const CompaniesList = () => {
                         return parseFloat(a.lastMonthIncome) - parseFloat(b.lastMonthIncome);
                     });
                     setCompaniesList(fullCompanyData);
-                    setSortedByTotalDescending(totalDescending);
-                    setSortedByTotalAscending(totalAscending);
-                    setSortedAverageDescending(averageDescending);
-                    setSortedAverageAscending(averageAscending);
+                    setSortedTotalandAverageDescending(totalAndAverageDescending);
+                    setSortedTotalandAverageAscendingg(totaAndAveragelAscending);
                     setSortedLastMonthIncomeDescending(lastDescending);
                     setSortedLastMonthIncomeAscending(lastAscending);
-                    // setIsLoading(false);
+                    setIsLoading(false);
                 })
 
         }
@@ -254,28 +251,27 @@ const CompaniesList = () => {
 
 
 
+    // Method which is used to sort by total income and average income. I am using one method to both columns,
+    // because when we sort total income the average income is also sorted
+    const sortTotalAndAverage = () => {
 
-
-
-
-
-
-
-    // Method which is used to sort by total income
-    const sortTotal = (column) => {
-        setCompaniesList(column);
-        setIsTotalIncomeSortedAscending(!isTotalIncomeSortedAscending);
+        if(isTotalAndAverageIncomeSortedAscending){
+            setCompaniesList(sortedTotalandAverageDescending);
+        }else{
+            setCompaniesList(sortedTotalandAverageAscendingg);
+        }
+        setIsTotalAndAverageIncomeSortedAscending(!isTotalAndAverageIncomeSortedAscending);
     }
 
-    // Method which is used to sort by average income
-    const sortAverage = (column) =>{
-        setCompaniesList(column);
-        setIsAverageIncomeSortedAscending(!isAverageIncomeSortedAscending);
-    }
+
 
     // Method which is used to sort by last month income
-    const sortLastMonth = (column) =>{
-        setCompaniesList(column);
+    const sortLastMonth = () =>{
+        if(isLastMonthIncomeSortedAscending){
+            setCompaniesList(sortedLastMonthIncomeDescending)
+        }else{
+            setCompaniesList(sortedLastMonthIncomeAscending);
+        }
         setIsLastMonthIncomeSortedAscending(!isLastMonthIncomeSortedAscending);
     }
 
@@ -314,23 +310,13 @@ const CompaniesList = () => {
                                 <CompaniesListFirstRowItem><p>Name</p></CompaniesListFirstRowItem>
                                 <CompaniesListFirstRowItem><p>City</p></CompaniesListFirstRowItem>
                                 <ClickableRowItem>
-                                    {
-                                        isTotalIncomeSortedAscending ?
-                                            <button onClick={() => sortTotal(sortedByTotalDescending)}>Total income</button> :
-                                            <button onClick={() => sortTotal(sortedByTotalAscending)}>Total income</button>
-                                    }
+                                    <button onClick={() => sortTotalAndAverage()}>Total income</button>
                                 </ClickableRowItem>
                                 <ClickableRowItem>
-                                    {
-                                        isAverageIncomeSortedAscending ?
-                                        <button onClick={() => sortAverage(sortedAverageDescending)}>Average income</button> :
-                                        <button onClick={() => sortAverage(sortedAverageAscending)}>Average income</button>
-                                    }
+                                    <button onClick={() => sortTotalAndAverage()}>Average income</button>
                                 </ClickableRowItem>
                                 <ClickableRowItem>
-                                    {isLastMonthIncomeSortedAscending ?
-                                        <button onClick={() => sortLastMonth(sortedLastMonthIncomeDescending)}>Last month Income</button> :
-                                        <button onClick={() => sortLastMonth(sortedLastMonthIncomeAscending)}>Last month Income</button>}
+                                    <button onClick={() => sortLastMonth()}>Last month Income</button>
                                 </ClickableRowItem>
                             </CompaniesListFirstRow>
                         </CompaniesListThead>
