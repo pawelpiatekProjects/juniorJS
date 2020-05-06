@@ -7,3 +7,4 @@ export const primaryBlueHover = "#4590c2";
 export const primaryBlueDisabled = "#67b1e4";
 export const white = "#fff";
 export const inputColor = "#cecece";
+export const yellow = "#ffd900";

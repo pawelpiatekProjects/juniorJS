@@ -108,7 +108,7 @@ const ClickableRowItem = styled.th`
     
         &:hover button{
             cursor: pointer;
-            background-color: ${colors.primaryBlueHover};
+            color: ${colors.yellow}
         }
 
 
@@ -234,7 +234,7 @@ const CompaniesList = () => {
                     setSortedAverageAscending(averageAscending);
                     setSortedLastMonthIncomeDescending(lastDescending);
                     setSortedLastMonthIncomeAscending(lastAscending);
-                    setIsLoading(false);
+                    // setIsLoading(false);
                 })
 
         }
