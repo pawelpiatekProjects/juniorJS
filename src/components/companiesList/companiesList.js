@@ -145,14 +145,14 @@ const CompaniesList = () => {
     //hooks used to manage state in this component
     const [searchInputValue, setSearchInputValue] = useState('');
     const [companiesList, setCompaniesList] = useState([]); //list of displaying companies
-    //------test---
+
     const [sortedByTotalDescending, setSortedByTotalDescending] = useState([]);
     const [sortedByTotalAscending, setSortedByTotalAscending] = useState([]);
     const [sortedAverageDescending, setSortedAverageDescending] = useState([]);
     const [sortedAverageAscending, setSortedAverageAscending] = useState([]);
     const [sortedLastMonthIncomeDescending, setSortedLastMonthIncomeDescending] = useState([]);
     const [sortedLastMonthIncomeAscending, setSortedLastMonthIncomeAscending] = useState([]);
-    //------test---
+
     const [currentCompaniesPage, setCurrentCompaniesPage] = useState(1); //which page of table is being displayed
     const [companiesOnPage, setCompaniesOnPage] = useState(20); //how many companies on one page
     const [isLoading, setIsLoading] = useState(false);
