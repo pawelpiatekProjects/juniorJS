@@ -141,6 +141,14 @@ const CompaniesList = () => {
     //hooks used to manage state in this component
     const [searchInputValue, setSearchInputValue] = useState('');
     const [companiesList, setCompaniesList] = useState([]); //list of displaying companies
+    //------test---
+    const [sortedByTotalDescending, setSortedByTotalDescending] = useState([]);
+    const [sortedByTotalAscending, setSortedByTotalAscending] = useState([]);
+    const [sortedAverageDescending, setSortedAverageDescending] = useState([]);
+    const [sortedAverageAscending, setSortedAverageAscending] = useState([]);
+    const [sortedLastMonthIncomeDescending, setSortedLastMonthIncomeDescending] = useState([]);
+    const [sortedLastMonthIncomeAscending, setSortedLastMonthIncomeAscending] = useState([]);
+    //------test---
     const [currentCompaniesPage, setCurrentCompaniesPage] = useState(1); //which page of table is being displayed
     const [companiesOnPage, setCompaniesOnPage] = useState(20); //how many companies on one page
     const [isLoading, setIsLoading] = useState(false);
@@ -198,7 +206,31 @@ const CompaniesList = () => {
             })
             Promise.all(companiesWithIncomes)
                 .then(fullCompanyData=>{
+                    const totalDescending = [...fullCompanyData].sort((a,b) =>{
+                        return parseFloat(b.totalIncome) - parseFloat(a.totalIncome);
+                    });
+                    const totalAscending = [...fullCompanyData].sort((a,b)=>{
+                        return parseFloat(a.totalIncome) - parseFloat(b.totalIncome);
+                    });
+                    const averageDescending =  [...fullCompanyData].sort((a,b)=>{
+                        return parseFloat(b.averageIncome) - parseFloat(a.averageIncome);
+                    });
+                    const averageAscending = [...fullCompanyData].sort((a,b)=>{
+                        return parseFloat(a.averageIncome) - parseFloat(b.averageIncome);
+                    });
+                    const lastDescending = [...fullCompanyData].sort((a,b)=>{
+                        return parseFloat(b.lastMonthIncome) - parseFloat(a.lastMonthIncome);
+                    });
+                    const lastAscending = [...fullCompanyData].sort((a,b)=>{
+                        return parseFloat(a.lastMonthIncome) - parseFloat(b.lastMonthIncome);
+                    });
                     setCompaniesList(fullCompanyData);
+                    setSortedByTotalDescending(totalDescending);
+                    setSortedByTotalAscending(totalAscending);
+                    setSortedAverageDescending(averageDescending);
+                    setSortedAverageAscending(averageAscending);
+                    setSortedLastMonthIncomeDescending(lastDescending);
+                    setSortedLastMonthIncomeAscending(lastAscending);
                     setIsLoading(false);
                 })
 
@@ -220,32 +252,19 @@ const CompaniesList = () => {
     // Method which is used to sort by total income
     const sortByTotalIncome = () => {
         if(isTotalIncomeSortedAscending){
-            const sortedByTotalIncome = [...companiesList].sort((a,b)=>{
-                return parseFloat(b.totalIncome) - parseFloat(a.totalIncome);
-            })
-            setCompaniesList(sortedByTotalIncome);
+            setCompaniesList(sortedByTotalAscending);
         }else{
-            const sortedByTotalIncome = [...companiesList].sort((a,b)=>{
-                return parseFloat(a.totalIncome) - parseFloat(b.totalIncome);
-            })
-            setCompaniesList(sortedByTotalIncome);
+            setCompaniesList(sortedByTotalDescending);
         }
-
         setIsTotalIncomeSortedAscending(!isTotalIncomeSortedAscending);
     };
 
     // Method which is used to sort by average income
     const sortByAverageIncome = () =>{
         if(isAverageIncomeSortedAscending){
-            const sortedByAverageIncome = [...companiesList].sort((a,b)=>{
-                return parseFloat(b.averageIncome) - parseFloat(a.averageIncome);
-            })
-            setCompaniesList(sortedByAverageIncome);
+            setCompaniesList(sortedAverageAscending);
         }else{
-            const sortedByAverageIncome = [...companiesList].sort((a,b)=>{
-                return parseFloat(a.averageIncome) - parseFloat(b.averageIncome);
-            })
-            setCompaniesList(sortedByAverageIncome);
+            setCompaniesList(sortedAverageDescending);
         }
 
         setIsAverageIncomeSortedAscending(!isAverageIncomeSortedAscending);
@@ -254,17 +273,10 @@ const CompaniesList = () => {
     // Method which is used to sort by last month income
     const sortByLastMonthIncome = () =>{
         if(isLastMonthIncomeSortedAscending){
-            const sortedByLastMonthIncome = [...companiesList].sort((a,b)=>{
-                return parseFloat(b.lastMonthIncome) - parseFloat(a.lastMonthIncome);
-            })
-            setCompaniesList(sortedByLastMonthIncome);
+            setCompaniesList(sortedLastMonthIncomeAscending);
         }else{
-            const sortedByLastMonthIncome = [...companiesList].sort((a,b)=>{
-                return parseFloat(a.lastMonthIncome) - parseFloat(b.lastMonthIncome);
-            })
-            setCompaniesList(sortedByLastMonthIncome);
+            setCompaniesList(sortedLastMonthIncomeDescending);
         }
-
         setIsLastMonthIncomeSortedAscending(!isLastMonthIncomeSortedAscending);
     }
 
